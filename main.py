@@ -53,6 +53,7 @@ def main():
 
         # Draw the Player on Screen
         player.draw(screen)
+        player.update(dt)
 
         # Refresh the display
         pygame.display.flip()
@@ -69,4 +70,3 @@ if __name__ == "__main__":
     main()
     pygame.quit()
 
-    
