@@ -8,10 +8,13 @@ Note - the collision box will be a circle of PLAYER_RADIUS to simplify the math
 
 import pygame
 from circleshape import CircleShape
+from shot import Shot
 from constants import PLAYER_RADIUS \
                     , PLAYER_TURN_SPEED \
                     , PLAYER_ACCELERATION \
                     , PLAYER_MAX_SPEED \
+                    , PLAYER_SHOOT_SPEED \
+                    , SHOT_RADIUS \
                     , SCREEN_WIDTH \
                     , SCREEN_HEIGHT
 
@@ -24,7 +27,7 @@ class Player(CircleShape):
         self.rotation = 0
         super().__init__(x, y, PLAYER_RADIUS)
         
-
+    #
     def forward(self):
         # y-axis is negative going up, positive going down
         # forward is north vector rotated by current rotation
@@ -53,6 +56,11 @@ class Player(CircleShape):
         self.velocity = newVelocity
 
 
+    def shoot(self):
+        shotPos = self.position + self.forward()
+        s = Shot(shotPos.x, shotPos.y, SHOT_RADIUS)
+        s.velocity = (self.forward() * PLAYER_SHOOT_SPEED) + self.velocity
+
 # circleshape overrides
 
     def draw(self, screen):
@@ -62,6 +70,7 @@ class Player(CircleShape):
     def update(self, dt):
         keys = pygame.key.get_pressed()
 
+        # MOVEMENT CONTROLS + MOVEMENT
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.rotate(-dt)
         
@@ -87,5 +96,10 @@ class Player(CircleShape):
             newPos.update(newPos.x, newPos.y - SCREEN_HEIGHT)
 
         self.position = newPos;
+
+        # SHOOTING CONTROLS + SHOOTING
+        if keys[pygame.K_SPACE]:
+            self.shoot()
+
 
 
