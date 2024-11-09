@@ -22,24 +22,41 @@ import pygame
 from constants import *
 
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 def main():
     print("Starting asteroids")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
+    # Init the pygame engine and create our canvas
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
     clock = pygame.time.Clock()
 
     # Time Delta
     dt = 0
 
+    # all game objects that can be updated.
+    updatable = pygame.sprite.Group()
+    # all game objects that can be drawn.
+    drawable = pygame.sprite.Group()
+    # all asteroids
+    asteroids = pygame.sprite.Group()
+    
+    # Configure the applicable containers for the given sprite types
+    # Note - As long as these are set, pygame.sprite.Sprite will automatically
+    #       add them to these groups at the time of creation
+    Player.containers = (updatable, drawable)
+    Asteroid.containers = (updatable, drawable, asteroids)
+    AsteroidField.containers = (updatable)
+
     # Create the player at the middle of the screen
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
-    rocks = []
+    # Create the asteroid field
+    field = AsteroidField()
 
     # Game Loop
     while True:
@@ -48,23 +65,18 @@ def main():
                 print("QUIT SIGNAL");
                 return 
 
-        # Clear the Screen
+        updatable.update(dt)
+
+        # Refresh the canvas
         screen.fill((0,0,0))
-
-        # Draw the Player on Screen
-        player.draw(screen)
-        player.update(dt)
-
-        # Refresh the display
+        # drawable.draw(screen) - Can't be used as it expects images
+        for d in drawable:
+            d.draw(screen)
         pygame.display.flip()
 
-        # Stall, and capture the delta-time in seconds
+        # Stall til end of frame, and capture the delta-time in seconds
         dt = clock.tick(60) / 1000
         
-        # Debug - Log the Frame Rate and Delta
-        # print(f"{round(clock.get_fps(),1)}")
-        # print(f"{round(dt,3)}")
-
 
 if __name__ == "__main__":
     main()

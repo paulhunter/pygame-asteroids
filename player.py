@@ -16,6 +16,8 @@ from constants import PLAYER_RADIUS \
                     , SCREEN_HEIGHT
 
 class Player(CircleShape):
+    containers = None
+
 
     def __init__(self, x, y):
         # degrees clockwise from north
@@ -27,6 +29,7 @@ class Player(CircleShape):
         # y-axis is negative going up, positive going down
         # forward is north vector rotated by current rotation
         return pygame.Vector2(0,-1).rotate(self.rotation)
+
 
     def triangle(self):
         forward = self.forward()
@@ -41,12 +44,14 @@ class Player(CircleShape):
     def rotate(self, dt):
         self.rotation = (self.rotation + (PLAYER_TURN_SPEED * dt)) % 360
 
+
     def accel(self, dt):
         forward = self.forward()
         newVelocity = self.velocity + (forward * dt * PLAYER_ACCELERATION)
         if (newVelocity.length() > PLAYER_MAX_SPEED):
             newVelocity.scale_to_length(PLAYER_MAX_SPEED)
         self.velocity = newVelocity
+
 
 # circleshape overrides
 
