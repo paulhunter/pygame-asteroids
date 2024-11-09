@@ -72,9 +72,10 @@ def main():
         updatable.update(dt)
 
         for a in asteroids:
-            if a.cricle_collision(player):
+            if a.circle_collision(player):
                 print("GAME OVER")
                 return
+            
 
         # Refresh the canvas
         screen.fill((0,0,0))
