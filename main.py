@@ -67,6 +67,11 @@ def main():
 
         updatable.update(dt)
 
+        for a in asteroids:
+            if a.cricle_collision(player):
+                print("GAME OVER")
+                return
+
         # Refresh the canvas
         screen.fill((0,0,0))
         # drawable.draw(screen) - Can't be used as it expects images
