@@ -76,6 +76,11 @@ def main():
                 print("GAME OVER")
                 return
             
+            for s in shots:
+                if a.circle_collision(s):
+                    a.kill()
+                    s.kill()
+
 
         # Refresh the canvas
         screen.fill((0,0,0))
