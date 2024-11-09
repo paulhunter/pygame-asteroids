@@ -14,6 +14,7 @@ from constants import PLAYER_RADIUS \
                     , PLAYER_ACCELERATION \
                     , PLAYER_MAX_SPEED \
                     , PLAYER_SHOOT_SPEED \
+                    , PLAYER_SHOOT_COOLDOWN \
                     , SHOT_RADIUS \
                     , SCREEN_WIDTH \
                     , SCREEN_HEIGHT
@@ -25,6 +26,7 @@ class Player(CircleShape):
     def __init__(self, x, y):
         # degrees clockwise from north
         self.rotation = 0
+        self.shotCooldown = 0
         super().__init__(x, y, PLAYER_RADIUS)
         
     #
@@ -98,7 +100,10 @@ class Player(CircleShape):
         self.position = newPos;
 
         # SHOOTING CONTROLS + SHOOTING
-        if keys[pygame.K_SPACE]:
+        if self.shotCooldown > 0:
+            self.shotCooldown -= dt
+        elif keys[pygame.K_SPACE]:
+            self.shotCooldown = PLAYER_SHOOT_COOLDOWN
             self.shoot()
 
 
