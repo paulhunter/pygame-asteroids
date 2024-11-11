@@ -13,11 +13,27 @@ To exit the virtual environment, simply use the following command "deactivate"
 Developer Resources
 - Python Style Guide - https://peps.python.org/pep-0008/#imports
 
+Things to further enhance the project:
+[x] Add a scoring system
+[ ] Multiple Lives and respawning
+[ ] Add an explosion effect for the asteroids
+[x] Add acceleration to the player
+[ ] Make the objects wrap around the screen
+    [x] Player
+    [ ] Asteroids
+[ ] Add a background image
+[ ] Create different weapon types
+[ ] Make the asteroids lumpy instead of round
+[ ] Make the ship have a triangular hitbox
+[ ] Add a shield power-up
+[ ] Add a speed power-up
+[ ] Add bombs that can be dropped
 
 
 '''
 
 import pygame
+import pygame.font
 
 from constants import *
 
@@ -36,8 +52,14 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
 
+    pygame.font.init()
+    font = pygame.font.Font(None, 36)
+
     # Time Delta
     dt = 0
+    # Player Score
+    score = 0
+
 
     # all game objects that can be updated.
     updatable = pygame.sprite.Group()
@@ -62,7 +84,7 @@ def main():
     # Create the asteroid field
     field = AsteroidField()
 
-    # Game Loop
+    # Game Loopd
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -78,6 +100,7 @@ def main():
             
             for s in shots:
                 if a.circle_collision(s):
+                    score += int(120 / a.radius)
                     a.split()
                     s.kill()
 
@@ -87,6 +110,10 @@ def main():
         # drawable.draw(screen) - Can't be used as it expects images
         for d in drawable:
             d.draw(screen)
+
+        score_text = font.render(f"{score}", False, "yellow", "black")
+        screen.blit(score_text, (10,10))
+
         pygame.display.flip()
 
         # Stall til end of frame, and capture the delta-time in seconds
