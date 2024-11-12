@@ -21,7 +21,7 @@ Things to further enhance the project:
 [ ] Make the objects wrap around the screen
     [x] Player
     [ ] Asteroids
-[ ] Add a background image
+[x] Add a background image
 [ ] Create different weapon types
 [ ] Make the asteroids lumpy instead of round
 [ ] Make the ship have a triangular hitbox
@@ -54,6 +54,9 @@ def main():
 
     pygame.font.init()
     font = pygame.font.Font(None, 36)
+
+    # Load the background image, convert for performance.
+    bg = pygame.image.load("bg_space.jpg").convert()
 
     # Time Delta
     dt = 0
@@ -106,7 +109,9 @@ def main():
 
 
         # Refresh the canvas
-        screen.fill((0,0,0))
+        # screen.fill((0,0,0))
+        screen.blit(bg, (0,0))
+
         # drawable.draw(screen) - Can't be used as it expects images
         for d in drawable:
             d.draw(screen)
