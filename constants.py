@@ -1,5 +1,6 @@
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
+DEBUG = True
 
 ASTEROID_SPAWN_INTERVAL = 0.8 # seconds
 ASTEROID_KINDS = 3 # Stages/Sizes of Asteroids

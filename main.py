@@ -25,6 +25,7 @@ Things to further enhance the project:
 [ ] Create different weapon types
 [ ] Make the asteroids lumpy instead of round
 [ ] Make the ship have a triangular hitbox
+    [x] Create a line segment + circle intersect check
 [ ] Add a shield power-up
 [ ] Add a speed power-up
 [ ] Add bombs that can be dropped
