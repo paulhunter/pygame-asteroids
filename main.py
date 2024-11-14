@@ -14,6 +14,8 @@ Developer Resources
 - Python Style Guide - https://peps.python.org/pep-0008/#imports
 
 Things to further enhance the project:
+[ ] Add a Main Menu
+[ ] Add Ambience/Background Asteroids to Main Menu
 [x] Add a scoring system
 [ ] Multiple Lives and respawning
 [ ] Add an explosion effect for the asteroids
@@ -22,13 +24,16 @@ Things to further enhance the project:
     [x] Player
     [ ] Asteroids
 [x] Add a background image
-[ ] Create different weapon types
+[ ] Spawn Modifiers on Score Thesholds
+    [ ] Create different weapon types
+    [ ] Add a shield power-up
+    [ ] Add a speed power-up
 [ ] Make the asteroids lumpy instead of round
+    > Pin the points to a circle, and use a circle bounding box to optimize
+    collision checks before iterating line segments
 [x] Make the ship have a triangular hitbox
     [x] Create a line segment + circle intersect check
     [ ] Optimize check with a bounding circle check first
-[ ] Add a shield power-up
-[ ] Add a speed power-up
 [ ] Add bombs that can be dropped
 
 
