@@ -1,102 +1,67 @@
 
 import pygame
+import math
 
-DEBUG = False
+# TODO - Unit Tests as a __main__ ?
 
-def circleLineSegmentCollision(origin, radius, a, b):
+def circleLineSegmentCollision(o, radius, a, b):
     ''' Dev Notes:
-        - Find the point on the segment closest to the origin
-        - Compare the distance of that point to the origin to
-          the max of the distance from either end of the segment
-        - If the closest point is inside, and the segment end
-          is outside, we have an intersection
-        - Otherwise, no intersection
+    High Level Algorithm
+    - Find the point on the line segment nearest to the circle's origin
+    - Find the point on the line segment farthest from the circle's origin
+    - If the distance to the nearest point is less than the radius and the
+      distance to the farthest point is larger than the radius, the line
+      segment intersects the circle, otherwise it does not
+    - Note: Line segment can be enclosed within the circle and not intersect
 
-        Later:
-        - Perhaps we care about the thickness of the render
+    The Math
+    The point on the line segment that is closest to the circle, is the
+    projection of the circle's origin onto the line, call it P
+
+    To determine if P would land on the line segment, we can check if the dot
+    product of the vectors drawn from the ends of the line to the origin and
+    line segment itself, if both greater than zero, indicating the angle
+    between the vectors is less than 90 degrees, the point P lands on the line.
+
+    If this is not the case, P is not on the line, and cannot be the nearest
+    point to the circle. If it is not the nearest point, one of the ends of
+    the line segment will be the nearest point to the circle.
+
+    When calculating distances, we will use their squares, to avoid costly
+    square root calculations
+
+    TODO - Perhaps we care about the thickness of the render in our collision
     '''
-    # TODO - Debug Check for Types?
 
-    DEBUG = globals()['DBEUG']
-
-    u = b - a
-    v = origin - a
-
-    # project the line to the origin, onto the segment,
-    # and add the origin of the vector to give us the point on the line
-    p = v.project(u) + a
-
-    min_d2 = p.distance_squared_to(origin)
-    max_d2 = max(a.distance_squared_to(origin), b.distance_squared_to(origin))
-    r2 = radius * radius
-
-
-    if DEBUG:
-        print(f"Origin: {origin.x},{origin.y}")
-        print(f"Radius: {radius}")
-        print(f"A: {a.x},{a.y}")
-        print(f"B: {b.x},{b.y}")
-        print(f"U (o-a): {u.x},{u.y}")
-        print(f"V (b-a): {v.x},{v.y}")
-        print(f"P (u on v) + a: {p.x},{p.y}")
-
-
-    if (min_d2 < r2 and max_d2 < r2):
-        if DEBUG:
-            print("Both Points Inside")
-        return False
-    elif (min_d2 > r2 and max_d2 > r2):
-        if DEBUG:
-            print(f"Both Points Outside")
-        return False
-    else:
-        if DEBUG:
-            print("Intersection")
-        return True
-
-
-def __main():
-    globals()['DBEUG'] = True
-
-    o = pygame.Vector2(3,3)
-    a = pygame.Vector2(2,0)
-    b = pygame.Vector2(4,0)
-
+    # Vectors from one end the line to the origin and the line itself
     u = b - a
     v = o - a
+    # Vectors from the other end of the line to the origin and the line itself
+    w = a - b
+    x = o - b
 
-    p = v.project(u) + a
+    min_d2 = math.inf
+    max_d2 = 0
+    r2 = radius * radius
 
+    if (u.dot(v) > 0 and w.dot(x) > 0):
+        # The projection of the origin onto the line segment will be the nearest
+        # point to the circle
+        p = v.project(u) + a
+        min_d2 = o.distance_squared_to(p)
+        max_d2 = max(o.distance_squared_to(a), o.distance_squared_to(b))
+    else:
+        # The nearest and farthest points to the circle will be either end of
+        # the line segment.
+        d1 = o.distance_squared_to(a)
+        d2 = o.distance_squared_to(b)
+        min_d2 = min(d1, d2)
+        max_d2 = max(d1, d2)
 
-    print(f"project v p u = {p.x}, {p.y}")
+    if (min_d2 < r2 and max_d2 < r2):
+        return False
+    elif (min_d2 > r2 and max_d2 > r2):
+        return False
+    else:
+        return True
 
-
-    origin = pygame.Vector2(0,3)
-    radius = 5
-    a = pygame.Vector2(5,1)
-    b = pygame.Vector2(0,0)
-    print(f"{circleLineSegmentCollision(origin, radius, a, b)}")
-
-
-    origin = pygame.Vector2(5,0)
-    radius = 3
-    a = pygame.Vector2(0,5)
-    b = pygame.Vector2(5,6)
-
-    p = (origin - a).project(b-a) + a
-    print(f"{p.x}, {p.y}")
-    print(f"{circleLineSegmentCollision(origin, radius, a, b)}")
-
-
-    origin = pygame.Vector2(0,0)
-    radius = 3
-    a = pygame.Vector2(-2,0)
-    b = pygame.Vector2(2,0)
-
-    p = (origin - a).project(b-a) + a
-    print(f"{p.x}, {p.y}")
-    print(f"{circleLineSegmentCollision(origin, radius, a, b)}")
-
-
-if __name__ == "__main__":
-    __main()

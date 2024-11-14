@@ -24,7 +24,7 @@ Things to further enhance the project:
 [x] Add a background image
 [ ] Create different weapon types
 [ ] Make the asteroids lumpy instead of round
-[ ] Make the ship have a triangular hitbox
+[x] Make the ship have a triangular hitbox
     [x] Create a line segment + circle intersect check
 [ ] Add a shield power-up
 [ ] Add a speed power-up
@@ -98,7 +98,7 @@ def main():
         updatable.update(dt)
 
         for a in asteroids:
-            if a.circle_collision(player):
+            if player.collideAsteroid(a):
                 print("GAME OVER")
                 return
             

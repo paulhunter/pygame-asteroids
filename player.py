@@ -18,6 +18,7 @@ from constants import PLAYER_RADIUS \
                     , SHOT_RADIUS \
                     , SCREEN_WIDTH \
                     , SCREEN_HEIGHT
+from collisions import circleLineSegmentCollision
 
 class Player(CircleShape):
     containers = None
@@ -38,7 +39,7 @@ class Player(CircleShape):
 
     def triangle(self):
         forward = self.forward()
-        right = pygame.Vector2(0,1).rotate(self.rotation + 90) * self.radius / 1.5
+        right = pygame.Vector2(1,0).rotate(self.rotation) * self.radius / 1.5
 
         a = self.position + (forward * self.radius)
         b = self.position - (forward * self.radius) - right
@@ -62,6 +63,19 @@ class Player(CircleShape):
         shotPos = self.position + self.forward()
         s = Shot(shotPos.x, shotPos.y, SHOT_RADIUS)
         s.velocity = (self.forward() * PLAYER_SHOOT_SPEED) + self.velocity
+
+
+    def collideAsteroid(self, asteroid):
+        a,b,c = self.triangle()
+        if circleLineSegmentCollision(asteroid.position, asteroid.radius, a, b):
+            return True
+        elif circleLineSegmentCollision(asteroid.position, asteroid.radius, b, c):
+            return True
+        elif circleLineSegmentCollision(asteroid.position, asteroid.radius, c, a):
+            return True
+        else:
+            return False
+
 
 # circleshape overrides
 

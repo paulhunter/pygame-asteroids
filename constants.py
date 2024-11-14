@@ -1,6 +1,5 @@
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
-DEBUG = True
 
 ASTEROID_SPAWN_INTERVAL = 0.8 # seconds
 ASTEROID_KINDS = 3 # Stages/Sizes of Asteroids
@@ -14,4 +13,4 @@ PLAYER_ACCELERATION = 500 # pixels per second per second
 PLAYER_SHOOT_SPEED = 500 # pixels per second
 PLAYER_SHOOT_COOLDOWN = 0.3 # seconds
 
-SHOT_RADIUS = 5 # pixels
+SHOT_RADIUS = 3 # pixels
