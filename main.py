@@ -26,6 +26,7 @@ Things to further enhance the project:
 [ ] Make the asteroids lumpy instead of round
 [x] Make the ship have a triangular hitbox
     [x] Create a line segment + circle intersect check
+    [ ] Optimize check with a bounding circle check first
 [ ] Add a shield power-up
 [ ] Add a speed power-up
 [ ] Add bombs that can be dropped
