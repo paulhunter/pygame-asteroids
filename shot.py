@@ -6,7 +6,8 @@ class Shot(CircleShape):
     containers = None
 
 
-    def __init__(self, x, y, radius):
+    def __init__(self, x, y, radius, player):
+        self.player = player
         super().__init__(x, y, radius)
     
 

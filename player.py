@@ -3,7 +3,6 @@ Player
 
 Represents the player, visualized as a triangle
 
-Note - the collision box will be a circle of PLAYER_RADIUS to simplify the math
 '''
 
 import pygame
@@ -28,9 +27,10 @@ class Player(CircleShape):
         # degrees clockwise from north
         self.rotation = 0
         self.shotCooldown = 0
+        self.score = 0
         super().__init__(x, y, PLAYER_RADIUS)
-        
-    #
+
+
     def forward(self):
         # y-axis is negative going up, positive going down
         # forward is north vector rotated by current rotation
@@ -61,7 +61,7 @@ class Player(CircleShape):
 
     def shoot(self):
         shotPos = self.position + self.forward()
-        s = Shot(shotPos.x, shotPos.y, SHOT_RADIUS)
+        s = Shot(shotPos.x, shotPos.y, SHOT_RADIUS, self)
         s.velocity = (self.forward() * PLAYER_SHOOT_SPEED) + self.velocity
 
 
@@ -76,6 +76,9 @@ class Player(CircleShape):
         else:
             return False
 
+
+    def scoreOnAsteroidKill(self, asteroid):
+        self.score += int(120 / asteroid.radius)
 
 # circleshape overrides
 

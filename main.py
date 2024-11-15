@@ -67,9 +67,6 @@ def main():
 
     # Time Delta
     dt = 0
-    # Player Score
-    score = 0
-
 
     # all game objects that can be updated.
     updatable = pygame.sprite.Group()
@@ -110,7 +107,7 @@ def main():
             
             for s in shots:
                 if a.circle_collision(s):
-                    score += int(120 / a.radius)
+                    s.player.scoreOnAsteroidKill(a)
                     a.split()
                     s.kill()
 
@@ -123,7 +120,7 @@ def main():
         for d in drawable:
             d.draw(screen)
 
-        score_text = font.render(f"{score}", False, "yellow", "black")
+        score_text = font.render(f"{player.score}", False, "yellow", "black")
         screen.blit(score_text, (10,10))
 
         pygame.display.flip()
