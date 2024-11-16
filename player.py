@@ -29,7 +29,8 @@ class Player(CircleShape):
         self.shotCooldown = 0
         self.score = 0
         super().__init__(x, y, PLAYER_RADIUS)
-
+        self.__a = self.forward() * PLAYER_RADIUS
+        self.__b = self.forward()
 
     def forward(self):
         # y-axis is negative going up, positive going down
@@ -38,12 +39,13 @@ class Player(CircleShape):
 
 
     def triangle(self):
-        forward = self.forward()
-        right = pygame.Vector2(1,0).rotate(self.rotation) * self.radius / 1.5
+        forward = self.forward() * self.radius
+        right = forward.rotate(140)
+        left = forward.rotate(220)
 
-        a = self.position + (forward * self.radius)
-        b = self.position - (forward * self.radius) - right
-        c = self.position - (forward * self.radius) + right
+        a = self.position + forward
+        b = self.position + right # - (forward * self.radius) - pygame.Vector(-right.x
+        c = self.position + left # - (forward * self.radius) + right
         return [a, b, c]
 
 
@@ -84,7 +86,8 @@ class Player(CircleShape):
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
-
+        # Circlular Boundary
+        # pygame.draw.circle(screen, "blue", self.position, self.radius, 2)
 
     def update(self, dt):
         keys = pygame.key.get_pressed()
