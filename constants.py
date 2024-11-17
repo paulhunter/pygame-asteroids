@@ -6,7 +6,7 @@ ASTEROID_KINDS = 3 # Stages/Sizes of Asteroids
 ASTEROID_MIN_RADIUS = 20 # pixels
 ASTEROID_MAX_RADIUS = ASTEROID_KINDS * ASTEROID_MIN_RADIUS # pixels
 
-PLAYER_RADIUS = 30 # pixels
+PLAYER_RADIUS = 25 # pixels
 PLAYER_TURN_SPEED = 300 # degrees per second
 PLAYER_MAX_SPEED = 200 # pixels per second
 PLAYER_ACCELERATION = 500 # pixels per second per second

@@ -20,20 +20,23 @@ Things to further enhance the project:
 [ ] Multiple Lives and respawning
 [ ] Add an explosion effect for the asteroids
 [x] Add acceleration to the player
-[ ] Make the objects wrap around the screen
-    [x] Player
-    [ ] Asteroids
+[x] Make the player wrap around the screen
+[ ] Clear Asteroids that have traveled off screen
+[ ] Increase asteroid spawn rate with time
 [x] Add a background image
 [ ] Spawn Modifiers on Score Thesholds
+    - Grant half the modifier if shot
+    - Grant full value if 'collected' with ship
     [ ] Create different weapon types
     [ ] Add a shield power-up
-    [ ] Add a speed power-up
+    [ ] Add a speed power-up (acceleration)
 [ ] Make the asteroids lumpy instead of round
     > Pin the points to a circle, and use a circle bounding box to optimize
     collision checks before iterating line segments
 [x] Make the ship have a triangular hitbox
     [x] Create a line segment + circle intersect check
     [ ] Optimize check with a bounding circle check first
+        [x] Constrain ship dimensions to a circle
 [ ] Add bombs that can be dropped
 
 
