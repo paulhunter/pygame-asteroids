@@ -123,6 +123,9 @@ def main():
         score_text = font.render(f"{player.score}", False, "yellow", "black")
         screen.blit(score_text, (10,10))
 
+        asteroid_count_text = font.render(f"{len(asteroids)}", False, "yellow", "black")
+        screen.blit(asteroid_count_text, (SCREEN_WIDTH - 10 - asteroid_count_text.get_width(), SCREEN_HEIGHT - 10 - asteroid_count_text.get_height()))
+
         pygame.display.flip()
 
         # Stall til end of frame, and capture the delta-time in seconds
