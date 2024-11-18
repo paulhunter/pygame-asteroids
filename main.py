@@ -38,7 +38,8 @@ Things to further enhance the project:
     [ ] Optimize check with a bounding circle check first
         [x] Constrain ship dimensions to a circle
 [ ] Add bombs that can be dropped
-
+[ ] Add Hyperspace Jump
+    - Original ROM - if Random(0,62) >= Num_Asteroids + 44 - Fail
 
 '''
 
