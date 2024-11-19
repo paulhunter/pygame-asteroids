@@ -19,3 +19,23 @@ This project uses Python 3, Python Virtual Environments, and the Package Install
 1. Launch the game by running `python main.py`
 
 
+# Collision Detection in 2D
+
+## Circles
+
+Collision detection of two circles, given their respective centers and radii is rather trivial.
+
+Simply compare the distance between the two centers with the value of the combined radii, if the distance, `d` is greater than the total combined radii, the circles do not intersect, and thus do no collide. However if the sum of the radii is greater than the distance between the centers, the cirlces do intersect.
+
+## Line Segments
+
+
+## Circle and a Line Segment
+
+
+### Dot Product of Vectors
+
+
+## Optimizations via Geometry Constraints
+
+### Circles First
