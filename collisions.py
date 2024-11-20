@@ -1,4 +1,3 @@
-
 import pygame
 import math
 
@@ -64,4 +63,5 @@ def circleLineSegmentCollision(o, radius, a, b):
         return False
     else:
         return True
+
 

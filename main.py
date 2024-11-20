@@ -1,5 +1,4 @@
 '''
-
 Running this Game
 Navigate to the project directory and enable the python virtual environment
 
@@ -8,7 +7,6 @@ source venv/bin/activate
 You should see your terminal prompt now prepended with "(venv)"
 
 To exit the virtual environment, simply use the following command "deactivate"
-
 
 Developer Resources
 - Python Style Guide - https://peps.python.org/pep-0008/#imports
@@ -40,18 +38,17 @@ Things to further enhance the project:
 [ ] Add bombs that can be dropped
 [ ] Add Hyperspace Jump
     - Original ROM - if Random(0,62) >= Num_Asteroids + 44 - Fail
-
 '''
 
 import pygame
 import pygame.font
 
 from constants import *
-
 from player import Player
 from shot import Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+
 
 def main():
     print("Starting asteroids")
@@ -115,7 +112,6 @@ def main():
                     a.split()
                     s.kill()
 
-
         # Refresh the canvas
         # screen.fill((0,0,0))
         screen.blit(bg, (0,0))
@@ -139,4 +135,5 @@ def main():
 if __name__ == "__main__":
     main()
     pygame.quit()
+
 

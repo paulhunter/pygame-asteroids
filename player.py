@@ -32,6 +32,7 @@ class Player(CircleShape):
         self.__a = self.forward() * PLAYER_RADIUS
         self.__b = self.forward()
 
+
     def forward(self):
         # y-axis is negative going up, positive going down
         # forward is north vector rotated by current rotation
@@ -82,12 +83,14 @@ class Player(CircleShape):
     def scoreOnAsteroidKill(self, asteroid):
         self.score += int(120 / asteroid.radius)
 
+
 # circleshape overrides
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
         # Circlular Boundary
         # pygame.draw.circle(screen, "blue", self.position, self.radius, 2)
+
 
     def update(self, dt):
         keys = pygame.key.get_pressed()
@@ -125,6 +128,5 @@ class Player(CircleShape):
         elif keys[pygame.K_SPACE]:
             self.shotCooldown = PLAYER_SHOOT_COOLDOWN
             self.shoot()
-
 
 
