@@ -10,8 +10,21 @@ class Asteroid(CircleShape):
 
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
+        
+        # generate the points of the asteroid around the circle of given radius
+        self.__points = []
+        total = 0
+        v = pygame.Vector2(radius, 0).rotate(random.randrange(20,60,1))
+        self.__points.append(v)
+        while True:
+            o = random.randrange(20,110,10)
+            if (total + o > 360):
+                break
+            v = v.rotate(o)
+            self.__points.append(v)
+            total += o
+        
     
-
     def split(self):
         self.kill()
         if (self.radius <= ASTEROID_MIN_RADIUS):
@@ -32,7 +45,14 @@ class Asteroid(CircleShape):
 # circleshape overrides
 
     def draw(self, screen):
-        pygame.draw.circle(screen, "white", self.position, self.radius, 2)
+        # cast the shape points over the current position to create the 
+        # polygon to visualize on screen
+        ps = []
+        for p in self.__points:
+            ps.append(self.position + p)
+        pygame.draw.polygon(screen, "white", ps, 2)
+        
+        # pygame.draw.circle(screen, "white", self.position, self.radius, 2)
 
 
     def update(self, dt):
