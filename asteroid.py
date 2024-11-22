@@ -2,7 +2,9 @@ import pygame
 import random
 
 from circleshape import CircleShape
-from constants import ASTEROID_MIN_RADIUS
+from constants import ASTEROID_MIN_RADIUS \
+                        , SCREEN_HEIGHT \
+                        , SCREEN_WIDTH
 
 class Asteroid(CircleShape):
     containers = None
@@ -57,6 +59,18 @@ class Asteroid(CircleShape):
 
     def update(self, dt):
         newPos = self.position + (self.velocity * dt)
+
+        # check if the asteroid has traveled off screen, and if so, remove it
+        b = 2 * self.radius # buffer
+        if (newPos.x - b > SCREEN_WIDTH):
+            self.kill()
+        elif (newPos.x + b < 0):
+            self.kill()
+        elif (newPos.y - b > SCREEN_HEIGHT):
+            self.kill()
+        elif (newPos.y + b < 0):
+            self.kill()
+
         self.position = newPos
 
 
