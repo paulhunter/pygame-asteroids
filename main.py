@@ -48,7 +48,7 @@ from player import Player
 from shot import Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
-
+from button import Button
 
 def main():
     print("Starting asteroids")
@@ -92,14 +92,20 @@ def main():
     # Create the asteroid field
     field = AsteroidField()
 
-    # Game Loopd
+    # POC Button Tester
+    button = Button(50, 50, 400, 100, "Test!")
+
+    # Game Loop
     while True:
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:
                 print("QUIT SIGNAL");
                 return 
 
         updatable.update(dt)
+
+        button.update(dt, events)
 
         for a in asteroids:
             if player.collideAsteroid(a):
@@ -125,6 +131,9 @@ def main():
 
         asteroid_count_text = font.render(f"{len(asteroids)}", False, "yellow", "black")
         screen.blit(asteroid_count_text, (SCREEN_WIDTH - 10 - asteroid_count_text.get_width(), SCREEN_HEIGHT - 10 - asteroid_count_text.get_height()))
+
+        # WIP Button - uncomment for testing
+        # button.draw(screen, font)
 
         pygame.display.flip()
 
