@@ -9,7 +9,7 @@ class Button:
         self.width = width
         self.height = height
         self.text = text
-
+        self.onClick = None
 
     def draw(self, screen, font):
         r = [self.position.x, self.position.y, self.width, self.height]
@@ -31,8 +31,9 @@ class Button:
 
                 # Todo - Rect Collision Check instead?
                 if (self.position.x <= p[0] <= self.position.x + self.width \
-                    and self.position.y <= p[1] <= self.position.y + self.height):
-                    print("Clicked the button")
+                        and self.position.y <= p[1] <= self.position.y + self.height):
+                    if (self.onClick != None):
+                        self.onClick()
 
 
         
