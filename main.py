@@ -14,13 +14,15 @@ Developer Resources
 Things to further enhance the project:
 [~] Add a Main Menu
     [~] Create a button module
+    [x] Add a custom font
 [~] Add Ambience/Background Asteroids to Main Menu
 [x] Add a scoring system
 [ ] Multiple Lives and respawning
 [ ] Add an explosion effect for the asteroids
 [x] Add acceleration to the player
 [x] Make the player wrap around the screen
-[ ] Clear Asteroids that have traveled off screen
+[x] Clear Asteroids that have traveled off screen
+[ ] Clear player shots that have traveled off screen
 [ ] Increase asteroid spawn rate with time
 [x] Add a background image
 [ ] Spawn Modifiers on Score Thesholds
@@ -76,6 +78,14 @@ def main():
 
     pygame.font.init()
     font = pygame.font.Font(None, 36)
+
+    font_ocr_reg = pygame.font.Font("OCR-a.ttf", 36)
+    font_ocr_title = pygame.font.Font("OCR-a.ttf", 120)
+
+    title = font_ocr_title.render("ASTEROIDS", False, (230,230,230))
+
+
+    font = font_ocr_reg
 
     # Load the background image, convert for performance.
     bg = pygame.image.load("bg_space.jpg").convert()
@@ -157,6 +167,8 @@ def main():
         # WIP Button - uncomment for testing
         if (state.in_menu) :
             button.draw(screen, font)
+            screen.blit(title, (SCREEN_WIDTH - title.get_width() - 150, 100))
+
 
         pygame.display.flip()
 
