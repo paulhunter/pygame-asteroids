@@ -13,7 +13,7 @@ class Button:
 
     def draw(self, screen, font):
         r = [self.position.x, self.position.y, self.width, self.height]
-        t = font.render(self.text, False, "white", "black")
+        t = font.render(self.text, False, "white")
 
         pygame.draw.rect(screen, "black", r)
         pygame.draw.rect(screen, "white", r, 2)
