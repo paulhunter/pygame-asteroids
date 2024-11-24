@@ -31,9 +31,10 @@ Things to further enhance the project:
     [ ] Create different weapon types
     [ ] Add a shield power-up
     [ ] Add a speed power-up (acceleration)
-[ ] Make the asteroids lumpy instead of round
+[x] Make the asteroids lumpy instead of round
     > Pin the points to a circle, and use a circle bounding box to optimize
     collision checks before iterating line segments
+    [ ] Update collision code to polygons instead of simply circles
 [x] Make the ship have a triangular hitbox
     [x] Create a line segment + circle intersect check
     [ ] Optimize check with a bounding circle check first
