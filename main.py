@@ -12,8 +12,9 @@ Developer Resources
 - Python Style Guide - https://peps.python.org/pep-0008/#imports
 
 Things to further enhance the project:
-[ ] Add a Main Menu
-[ ] Add Ambience/Background Asteroids to Main Menu
+[~] Add a Main Menu
+    [~] Create a button module
+[~] Add Ambience/Background Asteroids to Main Menu
 [x] Add a scoring system
 [ ] Multiple Lives and respawning
 [ ] Add an explosion effect for the asteroids
@@ -40,9 +41,14 @@ Things to further enhance the project:
     - Original ROM - if Random(0,62) >= Num_Asteroids + 44 - Fail
 '''
 
+# Python Libraries
+import types
+
+# PyGame Modules
 import pygame
 import pygame.font
 
+# Local Modules
 from constants import *
 from player import Player
 from shot import Shot
@@ -50,10 +56,18 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from button import Button
 
+def click_start(state):
+    state.in_menu = False
+
+    for a in state.asteroids:
+        a.kill()
+
+    state.field.reset()
+    state.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+
 def main():
     print("Starting asteroids")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
 
     # Init the pygame engine and create our canvas
     pygame.init()
@@ -66,34 +80,41 @@ def main():
     # Load the background image, convert for performance.
     bg = pygame.image.load("bg_space.jpg").convert()
 
-    # Time Delta
-    dt = 0
+    # Game State Container
+    state = types.SimpleNamespace()
+    state.in_menu = True
+
+
 
     # all game objects that can be updated.
-    updatable = pygame.sprite.Group()
+    state.updatable = pygame.sprite.Group()
     # all game objects that can be drawn.
-    drawable = pygame.sprite.Group()
+    state.drawable = pygame.sprite.Group()
     # all asteroids
-    asteroids = pygame.sprite.Group()
+    state.asteroids = pygame.sprite.Group()
     # all player shots
-    shots = pygame.sprite.Group()
+    state.shots = pygame.sprite.Group()
+
+    # Time Delta
+    dt = 0
     
     # Configure the applicable containers for the given sprite types
     # Note - As long as these are set, pygame.sprite.Sprite will automatically
     #       add them to these groups at the time of creation
-    Player.containers = (updatable, drawable)
-    Shot.containers = (updatable, drawable, shots)
-    Asteroid.containers = (updatable, drawable, asteroids)
-    AsteroidField.containers = (updatable)
+    Player.containers = (state.updatable, state.drawable)
+    Shot.containers = (state.updatable, state.drawable, state.shots)
+    Asteroid.containers = (state.updatable, state.drawable, state.asteroids)
+    AsteroidField.containers = (state.updatable)
 
     # Create the player at the middle of the screen
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    state.player = None
 
     # Create the asteroid field
-    field = AsteroidField()
+    state.field = AsteroidField()
 
     # POC Button Tester
-    button = Button(50, 50, 400, 100, "Test!")
+    button = Button(50, 50, 200, 80, "Start")
+    button.onClick = lambda: click_start(state)
 
     # Game Loop
     while True:
@@ -103,16 +124,16 @@ def main():
                 print("QUIT SIGNAL");
                 return 
 
-        updatable.update(dt)
+        state.updatable.update(dt)
 
         button.update(dt, events)
 
-        for a in asteroids:
-            if player.collideAsteroid(a):
+        for a in state.asteroids:
+            if state.player and state.player.collideAsteroid(a):
                 print("GAME OVER")
                 return
             
-            for s in shots:
+            for s in state.shots:
                 if a.circle_collision(s):
                     s.player.scoreOnAsteroidKill(a)
                     a.split()
@@ -123,17 +144,19 @@ def main():
         screen.blit(bg, (0,0))
 
         # drawable.draw(screen) - Can't be used as it expects images
-        for d in drawable:
+        for d in state.drawable:
             d.draw(screen)
 
-        score_text = font.render(f"{player.score}", False, "yellow", "black")
-        screen.blit(score_text, (10,10))
+        if (state.in_menu == False):
+            score_text = font.render(f"{state.player.score}", False, "yellow", "black")
+            screen.blit(score_text, (10,10))
 
-        asteroid_count_text = font.render(f"{len(asteroids)}", False, "yellow", "black")
-        screen.blit(asteroid_count_text, (SCREEN_WIDTH - 10 - asteroid_count_text.get_width(), SCREEN_HEIGHT - 10 - asteroid_count_text.get_height()))
+            asteroid_count_text = font.render(f"{len(state.asteroids)}", False, "yellow", "black")
+            screen.blit(asteroid_count_text, (SCREEN_WIDTH - 10 - asteroid_count_text.get_width(), SCREEN_HEIGHT - 10 - asteroid_count_text.get_height()))
 
         # WIP Button - uncomment for testing
-        # button.draw(screen, font)
+        if (state.in_menu) :
+            button.draw(screen, font)
 
         pygame.display.flip()
 
