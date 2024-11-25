@@ -22,7 +22,7 @@ Things to further enhance the project:
 [x] Add acceleration to the player
 [x] Make the player wrap around the screen
 [x] Clear Asteroids that have traveled off screen
-[ ] Clear player shots that have traveled off screen
+[x] Clear player shots that have traveled off screen
 [ ] Increase asteroid spawn rate with time
 [x] Add a background image
 [ ] Spawn Modifiers on Score Thesholds
@@ -162,7 +162,7 @@ def main():
             score_text = font.render(f"{state.player.score}", False, "yellow", "black")
             screen.blit(score_text, (10,10))
 
-            asteroid_count_text = font.render(f"{len(state.asteroids)}", False, "yellow", "black")
+            asteroid_count_text = font.render(f"A:{len(state.asteroids)}, S:{len(state.shots)}", False, "yellow", "black")
             screen.blit(asteroid_count_text, (SCREEN_WIDTH - 10 - asteroid_count_text.get_width(), SCREEN_HEIGHT - 10 - asteroid_count_text.get_height()))
 
         # WIP Button - uncomment for testing
