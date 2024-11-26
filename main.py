@@ -11,37 +11,6 @@ To exit the virtual environment, simply use the following command "deactivate"
 Developer Resources
 - Python Style Guide - https://peps.python.org/pep-0008/#imports
 
-Things to further enhance the project:
-[~] Add a Main Menu
-    [~] Create a button module
-    [x] Add a custom font
-[~] Add Ambience/Background Asteroids to Main Menu
-[x] Add a scoring system
-[ ] Multiple Lives and respawning
-[ ] Add an explosion effect for the asteroids
-[x] Add acceleration to the player
-[x] Make the player wrap around the screen
-[x] Clear Asteroids that have traveled off screen
-[x] Clear player shots that have traveled off screen
-[ ] Increase asteroid spawn rate with time
-[x] Add a background image
-[ ] Spawn Modifiers on Score Thesholds
-    - Grant half the modifier if shot
-    - Grant full value if 'collected' with ship
-    [ ] Create different weapon types
-    [ ] Add a shield power-up
-    [ ] Add a speed power-up (acceleration)
-[x] Make the asteroids lumpy instead of round
-    > Pin the points to a circle, and use a circle bounding box to optimize
-    collision checks before iterating line segments
-    [ ] Update collision code to polygons instead of simply circles
-[x] Make the ship have a triangular hitbox
-    [x] Create a line segment + circle intersect check
-    [ ] Optimize check with a bounding circle check first
-        [x] Constrain ship dimensions to a circle
-[ ] Add bombs that can be dropped
-[ ] Add Hyperspace Jump
-    - Original ROM - if Random(0,62) >= Num_Asteroids + 44 - Fail
 '''
 
 # Python Libraries
