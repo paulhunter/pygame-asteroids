@@ -12,6 +12,7 @@ class Button:
         self.onClick = None
 
         self.__hover = False
+        self.__mouse_down = False
         self.__rect = pygame.Rect(  self.position.x,
                                     self.position.y,
                                     self.width,
@@ -21,7 +22,10 @@ class Button:
     def draw(self, screen, font):
         t = font.render(self.text, False, "white")
 
-        pygame.draw.rect(screen, (30,30,30) if self.__hover else "black", self.__rect)
+        pygame.draw.rect(screen,
+            (0,40,40) if self.__mouse_down
+            else (40,40,40) if self.__hover
+            else "black", self.__rect)
         pygame.draw.rect(screen, "white", self.__rect, 2)
 
         t_offset = pygame.Vector2((self.width - t.get_width()) / 2,
@@ -37,9 +41,22 @@ class Button:
                 if (self.onClick != None
                         and self.__rect.collidepoint(ev.pos)
                         and ev.button == 1):
-                    self.onClick()
+                    self.__mouse_down = True
 
+            if ev.type == pygame.MOUSEBUTTONUP:
+                if (self.__mouse_down
+                    and self.onClick != None
+                    and self.__rect.collidepoint(ev.pos)
+                    and ev.button == 1):
+                        self.onClick()
+                self.__mouse_down = False
 
-
+            if ev.type == pygame.MOUSEMOTION:
+                if (self.__hover
+                    and not self.__rect.collidepoint(ev.pos)):
+                    self.__hover = False
+                elif (not self.__hover
+                    and self.__rect.collidepoint(ev.pos)):
+                    self.__hover = True
 
         
