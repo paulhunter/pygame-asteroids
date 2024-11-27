@@ -11,29 +11,35 @@ class Button:
         self.text = text
         self.onClick = None
 
+        self.__hover = False
+        self.__rect = pygame.Rect(  self.position.x,
+                                    self.position.y,
+                                    self.width,
+                                    self.height)
+
+
     def draw(self, screen, font):
-        r = [self.position.x, self.position.y, self.width, self.height]
         t = font.render(self.text, False, "white")
 
-        pygame.draw.rect(screen, "black", r)
-        pygame.draw.rect(screen, "white", r, 2)
+        pygame.draw.rect(screen, (30,30,30) if self.__hover else "black", self.__rect)
+        pygame.draw.rect(screen, "white", self.__rect, 2)
 
-        tp = pygame.Vector2((self.width - t.get_width()) / 2, 
+        t_offset = pygame.Vector2((self.width - t.get_width()) / 2,
                 (self.height - t.get_height()) / 2)
 
-        screen.blit(t, (self.position.x + tp.x, self.position.y + tp.y))  
+        screen.blit(t, (self.position.x + t_offset.x,
+                        self.position.y + t_offset.y))
 
 
     def update(self, dt, events):
         for ev in events:
             if ev.type == pygame.MOUSEBUTTONDOWN:
-                p = pygame.mouse.get_pos()
+                if (self.onClick != None
+                        and self.__rect.collidepoint(ev.pos)
+                        and ev.button == 1):
+                    self.onClick()
 
-                # Todo - Rect Collision Check instead?
-                if (self.position.x <= p[0] <= self.position.x + self.width \
-                        and self.position.y <= p[1] <= self.position.y + self.height):
-                    if (self.onClick != None):
-                        self.onClick()
+
 
 
         
