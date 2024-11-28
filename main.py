@@ -37,6 +37,9 @@ def click_start(state):
     state.field.reset()
     state.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
+def click_quit(state):
+    state.quit = True
+
 
 def main():
     print("Starting asteroids")
@@ -63,7 +66,7 @@ def main():
     # Game State Container
     state = types.SimpleNamespace()
     state.in_menu = True
-
+    state.quit = False
 
 
     # all game objects that can be updated.
@@ -92,21 +95,32 @@ def main():
     # Create the asteroid field
     state.field = AsteroidField()
 
-    # POC Button Tester
-    button = Button(50, 50, 200, 80, "Start")
-    button.onClick = lambda: click_start(state)
+    # Main Menu Buttons
+    # 130 Pixel Vertical Offsets
+    start_button = Button(50, 50, 260, 80, "Start")
+    start_button.onClick = lambda: click_start(state)
+
+    how_to_button = Button(50, 180, 260, 80, "How To Play")
+
+    quit_button = Button(50, 590, 260, 80, "Quit")
+    quit_button.onClick = lambda: click_quit(state)
 
     # Game Loop
     while True:
+        if (state.quit):
+            return
+
         events = pygame.event.get()
         for event in events:
+            # Window was closed
             if event.type == pygame.QUIT:
-                print("QUIT SIGNAL");
                 return 
 
         state.updatable.update(dt)
 
-        button.update(dt, events)
+        start_button.update(dt, events)
+        how_to_button.update(dt, events)
+        quit_button.update(dt, events)
 
         for a in state.asteroids:
             if state.player and state.player.collideAsteroid(a):
@@ -120,7 +134,6 @@ def main():
                     s.kill()
 
         # Refresh the canvas
-        # screen.fill((0,0,0))
         screen.blit(bg, (0,0))
 
         # drawable.draw(screen) - Can't be used as it expects images
@@ -134,11 +147,12 @@ def main():
             asteroid_count_text = font.render(f"A:{len(state.asteroids)}, S:{len(state.shots)}", False, "yellow", "black")
             screen.blit(asteroid_count_text, (SCREEN_WIDTH - 10 - asteroid_count_text.get_width(), SCREEN_HEIGHT - 10 - asteroid_count_text.get_height()))
 
-        # WIP Button - uncomment for testing
         if (state.in_menu) :
-            button.draw(screen, font)
-            screen.blit(title, (SCREEN_WIDTH - title.get_width() - 150, 100))
+            start_button.draw(screen, font)
+            how_to_button.draw(screen, font)
+            quit_button.draw(screen, font)
 
+            screen.blit(title, (SCREEN_WIDTH - title.get_width() - 150, 100))
 
         pygame.display.flip()
 
