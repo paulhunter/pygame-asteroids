@@ -23,7 +23,7 @@ class Button:
         t = font.render(self.text, False, "white")
 
         pygame.draw.rect(screen,
-            (0,40,40) if self.__mouse_down
+            (0,60,60) if self.__mouse_down
             else (40,40,40) if self.__hover
             else "black", self.__rect)
         pygame.draw.rect(screen, "white", self.__rect, 2)
