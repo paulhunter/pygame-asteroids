@@ -11,6 +11,11 @@ class Button:
         self.text = text
         self.onClick = None
 
+        self.foreground_color = None
+        self.background_color = None
+        self.on_hover_color = None
+        self.on_press_color = None
+
         self.__hover = False
         self.__mouse_down = False
         self.__rect = pygame.Rect(  self.position.x,
@@ -18,16 +23,22 @@ class Button:
                                     self.width,
                                     self.height)
 
-
     def draw(self, screen, font):
         t = font.render(self.text, False, "white")
 
         pygame.draw.rect(screen,
-            (0,60,60) if self.__mouse_down
-            else (40,40,40) if self.__hover
-            else "black", self.__rect)
-        pygame.draw.rect(screen, "white", self.__rect, 2)
+            ((0,60,60) if not self.on_press_color
+                else self.on_press_color) if self.__mouse_down
+            else ((40,40,40) if not self.on_hover_color
+                else self.on_hover_color) if self.__hover
+            else ("black" if not self.background_color
+                else self.background_color), self.__rect)
 
+        pygame.draw.rect(screen,
+            ("white" if not self.foreground_color else self.foreground_color),
+            self.__rect, 2)
+
+        # center the text vertically and horizontally
         t_offset = pygame.Vector2((self.width - t.get_width()) / 2,
                 (self.height - t.get_height()) / 2)
 
