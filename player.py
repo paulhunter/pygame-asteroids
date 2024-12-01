@@ -29,9 +29,8 @@ class Player(CircleShape):
         self.shotCooldown = 0
         self.score = 0
         super().__init__(x, y, PLAYER_RADIUS)
-        self.__a = self.forward() * PLAYER_RADIUS
-        self.__b = self.forward()
 
+        self.shot_interval_modifier = 1.0
 
     def forward(self):
         # y-axis is negative going up, positive going down
@@ -45,8 +44,8 @@ class Player(CircleShape):
         left = forward.rotate(220)
 
         a = self.position + forward
-        b = self.position + right # - (forward * self.radius) - pygame.Vector(-right.x
-        c = self.position + left # - (forward * self.radius) + right
+        b = self.position + right
+        c = self.position + left
         return [a, b, c]
 
 
@@ -68,7 +67,7 @@ class Player(CircleShape):
         s.velocity = (self.forward() * PLAYER_SHOOT_SPEED) + self.velocity
 
 
-    def collideAsteroid(self, asteroid):
+    def collideCircle(self, asteroid):
         a,b,c = self.triangle()
         if circleLineSegmentCollision(asteroid.position, asteroid.radius, a, b):
             return True
@@ -81,7 +80,7 @@ class Player(CircleShape):
 
 
     def scoreOnAsteroidKill(self, asteroid):
-        self.score += int(120 / asteroid.radius)
+        self.score += int(60 / asteroid.radius)
 
 
 # circleshape overrides
@@ -111,6 +110,8 @@ class Player(CircleShape):
         newPos = self.position + (self.velocity * dt);
         # Bound the player to the screen
         # Wrap around if they have traveled too far
+        # DISABLE FOR NOW - REVISIT LATER
+        '''
         if (newPos.x < 0):
             newPos.update(newPos.x + SCREEN_WIDTH, newPos.y)
         if (newPos.x > SCREEN_WIDTH):
@@ -119,6 +120,7 @@ class Player(CircleShape):
             newPos.update(newPos.x, newPos.y + SCREEN_HEIGHT)
         if (newPos.y > SCREEN_HEIGHT):
             newPos.update(newPos.x, newPos.y - SCREEN_HEIGHT)
+        '''
 
         self.position = newPos;
 
@@ -126,7 +128,7 @@ class Player(CircleShape):
         if self.shotCooldown > 0:
             self.shotCooldown -= dt
         elif keys[pygame.K_SPACE]:
-            self.shotCooldown = PLAYER_SHOOT_COOLDOWN
+            self.shotCooldown = PLAYER_SHOOT_COOLDOWN * self.shot_interval_modifier
             self.shoot()
 
 

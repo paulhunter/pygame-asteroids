@@ -26,6 +26,7 @@ from player import Player
 from shot import Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from weaponmodifier import WeaponModifier
 from button import Button
 
 def click_start(state):
@@ -77,6 +78,8 @@ def main():
     state.asteroids = pygame.sprite.Group()
     # all player shots
     state.shots = pygame.sprite.Group()
+    # all player modifiers
+    state.modifiers = pygame.sprite.Group()
 
     # Time Delta
     dt = 0
@@ -88,6 +91,7 @@ def main():
     Shot.containers = (state.updatable, state.drawable, state.shots)
     Asteroid.containers = (state.updatable, state.drawable, state.asteroids)
     AsteroidField.containers = (state.updatable)
+    WeaponModifier.containers = (state.updatable, state.drawable, state.modifiers)
 
     # Create the player at the middle of the screen
     state.player = None
@@ -104,6 +108,12 @@ def main():
 
     quit_button = Button(50, 590, 260, 80, "Quit")
     quit_button.onClick = lambda: click_quit(state)
+
+
+    # Modifier Spawn Paramters
+    modifier_spawn_threshold = 20
+    next_modifier_spawn = modifier_spawn_threshold
+
 
     # Game Loop
     while True:
@@ -123,15 +133,25 @@ def main():
         quit_button.update(dt, events)
 
         for a in state.asteroids:
-            if state.player and state.player.collideAsteroid(a):
+            if state.player and state.player.collideCircle(a):
                 print("GAME OVER")
                 return
             
             for s in state.shots:
                 if a.circle_collision(s):
                     s.player.scoreOnAsteroidKill(a)
+                    if (s.player.score > next_modifier_spawn):
+                        next_modifier_spawn += modifier_spawn_threshold
+                        p,v = state.field.generateSpawn()
+                        wmod = WeaponModifier(p.x, p.y)
+                        wmod.velocity = v
                     a.split()
                     s.kill()
+
+        for m in state.modifiers:
+            if state.player and state.player.collideCircle(m):
+                state.player.shot_interval_modifier *= m.shot_interval_modifier
+                m.kill()
 
         # Refresh the canvas
         screen.blit(bg, (0,0))

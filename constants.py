@@ -15,4 +15,5 @@ PLAYER_SHOOT_COOLDOWN = 0.3 # seconds
 
 SHOT_RADIUS = 3 # pixels
 
+MODIFIER_RADIUS = 20 # pixels
 
