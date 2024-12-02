@@ -32,20 +32,8 @@ class WeaponModifier(CircleShape):
                             2)
 
     def update(self, dt):
-        newPos = self.position + (self.velocity * dt)
-
-        # TODO - Copy Pasta - Refactor
-        # check if the asteroid has traveled off screen, and if so, remove it
-        b = 10 * self.radius # buffer
-        if (newPos.x - b > SCREEN_WIDTH):
+        self.position += (self.velocity * dt)
+        if self.out_of_bounds():
             self.kill()
-        elif (newPos.x + b < 0):
-            self.kill()
-        elif (newPos.y - b > SCREEN_HEIGHT):
-            self.kill()
-        elif (newPos.y + b < 0):
-            self.kill()
-
-        self.position = newPos
 
 

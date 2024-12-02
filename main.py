@@ -142,7 +142,7 @@ def main():
                     s.player.scoreOnAsteroidKill(a)
                     if (s.player.score > next_modifier_spawn):
                         next_modifier_spawn += modifier_spawn_threshold
-                        p,v = state.field.generateSpawn()
+                        p,v = state.field.generateSpawn(MODIFIER_RADIUS)
                         wmod = WeaponModifier(p.x, p.y)
                         wmod.velocity = v
                     a.split()

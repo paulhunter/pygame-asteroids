@@ -1,5 +1,7 @@
 import pygame
 
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+
 class CircleShape(pygame.sprite.Sprite):
 
 
@@ -19,6 +21,15 @@ class CircleShape(pygame.sprite.Sprite):
         d2 = self.radius + c.radius
         return (d2 > d)
 
+    def out_of_bounds(self):
+        b = 2 * self.radius
+        if (self.position.x - b > SCREEN_WIDTH
+            or self.position.x + b < 0
+            or self.position.y - b > SCREEN_HEIGHT
+            or self.position.y + b < 0):
+            return True
+        else:
+            return False
 
     def draw(self, screen):
         # sub-classes must override
