@@ -53,13 +53,12 @@ class Player(CircleShape):
         self.rotation = (self.rotation + (PLAYER_TURN_SPEED * dt)) % 360
 
 
-    def accel(self, dt):
-        forward = self.forward()
-        newVelocity = self.velocity + (forward * dt * PLAYER_ACCELERATION)
+    def accel(self, dt, dir = None):
+        direction = dir if dir != None else self.forward()
+        newVelocity = self.velocity + (direction * dt * PLAYER_ACCELERATION)
         if (newVelocity.length() > PLAYER_MAX_SPEED):
             newVelocity.scale_to_length(PLAYER_MAX_SPEED)
         self.velocity = newVelocity
-
 
     def shoot(self):
         shotPos = self.position + (self.forward() * PLAYER_RADIUS)
@@ -106,6 +105,9 @@ class Player(CircleShape):
 
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             self.accel(-dt)
+
+        if keys[pygame.K_q]:
+            self.accel(dt, -self.velocity.normalize())
 
         newPos = self.position + (self.velocity * dt);
         # Bound the player to the screen
