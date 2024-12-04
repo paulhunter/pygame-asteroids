@@ -30,7 +30,7 @@ from weaponmodifier import WeaponModifier
 from button import Button
 
 def click_start(state):
-    state.in_menu = False
+    state.in_menu = None
 
     for a in state.asteroids:
         a.kill()
@@ -38,12 +38,15 @@ def click_start(state):
     state.field.reset()
     state.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
+def click_main_menu(state):
+    state.in_menu = "MAIN"
+    state.player.kill()
+
 def click_quit(state):
     state.quit = True
 
 
 def main():
-    print("Starting asteroids")
 
     # Init the pygame engine and create our canvas
     pygame.init()
@@ -54,10 +57,11 @@ def main():
     font = pygame.font.Font(None, 36)
 
     font_ocr_reg = pygame.font.Font("OCR-a.ttf", 36)
+    font_ocr_lg = pygame.font.Font("OCR-a.ttf", 72)
     font_ocr_title = pygame.font.Font("OCR-a.ttf", 120)
 
     title = font_ocr_title.render("ASTEROIDS", False, (230,230,230))
-
+    game_over = font_ocr_lg.render("GAME OVER", False, (230,230,230))
 
     font = font_ocr_reg
 
@@ -66,7 +70,7 @@ def main():
 
     # Game State Container
     state = types.SimpleNamespace()
-    state.in_menu = True
+    state.in_menu = "MAIN"
     state.quit = False
 
 
@@ -106,6 +110,9 @@ def main():
 
     how_to_button = Button(50, 180, 260, 80, "How To Play")
 
+    main_menu_button = Button(50, 460, 260, 80, "Main Menu")
+    main_menu_button.onClick = lambda: click_main_menu(state)
+
     quit_button = Button(50, 590, 260, 80, "Quit")
     quit_button.onClick = lambda: click_quit(state)
 
@@ -117,7 +124,7 @@ def main():
 
     # Game Loop
     while True:
-        if (state.quit):
+        if state.quit:
             return
 
         events = pygame.event.get()
@@ -130,17 +137,21 @@ def main():
 
         start_button.update(dt, events)
         how_to_button.update(dt, events)
+        main_menu_button.update(dt, events)
         quit_button.update(dt, events)
+
 
         for a in state.asteroids:
             if state.player and state.player.collideCircle(a):
-                print("GAME OVER")
-                return
+                state.player.hit()
+                if not state.player.is_alive():
+                    state.in_menu = "END"
+
             
             for s in state.shots:
                 if a.circle_collision(s):
                     s.player.scoreOnAsteroidKill(a)
-                    if (s.player.score > next_modifier_spawn):
+                    if s.player.score > next_modifier_spawn:
                         next_modifier_spawn += modifier_spawn_threshold
                         p,v = state.field.generateSpawn(MODIFIER_RADIUS)
                         wmod = WeaponModifier(p.x, p.y)
@@ -160,19 +171,31 @@ def main():
         for d in state.drawable:
             d.draw(screen)
 
-        if (state.in_menu == False):
+        if state.in_menu == None:
             score_text = font.render(f"{state.player.score}", False, "yellow", "black")
             screen.blit(score_text, (10,10))
 
             asteroid_count_text = font.render(f"A:{len(state.asteroids)}, S:{len(state.shots)}", False, "yellow", "black")
-            screen.blit(asteroid_count_text, (SCREEN_WIDTH - 10 - asteroid_count_text.get_width(), SCREEN_HEIGHT - 10 - asteroid_count_text.get_height()))
+            screen.blit(asteroid_count_text,
+                (
+                SCREEN_WIDTH - 10 - asteroid_count_text.get_width(),
+                SCREEN_HEIGHT - 10 - asteroid_count_text.get_height())
+                )
 
-        if (state.in_menu) :
+        if state.in_menu == "MAIN":
             start_button.draw(screen, font)
             how_to_button.draw(screen, font)
             quit_button.draw(screen, font)
 
             screen.blit(title, (SCREEN_WIDTH - title.get_width() - 150, 100))
+
+        if state.in_menu == "END":
+            main_menu_button.draw(screen, font)
+            quit_button.draw(screen, font)
+
+            screen.blit(game_over,
+                        (int((SCREEN_WIDTH - game_over.get_width())/2), 100))
+
 
         pygame.display.flip()
 

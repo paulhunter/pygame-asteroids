@@ -31,6 +31,9 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
 
         self.shot_interval_modifier = 1.0
+        self.shield_level = 0
+        self.hit_points = 1
+
 
     def forward(self):
         # y-axis is negative going up, positive going down
@@ -60,6 +63,7 @@ class Player(CircleShape):
             newVelocity.scale_to_length(PLAYER_MAX_SPEED)
         self.velocity = newVelocity
 
+
     def shoot(self):
         shotPos = self.position + (self.forward() * PLAYER_RADIUS)
         s = Shot(shotPos.x, shotPos.y, SHOT_RADIUS, self)
@@ -82,6 +86,17 @@ class Player(CircleShape):
         self.score += int(60 / asteroid.radius)
 
 
+    def hit(self):
+        if self.shield_level > 0:
+            self.shield_level -= 1
+        else:
+            self.hit_points -= 1
+
+
+    def is_alive(self):
+        return self.hit_points > 0
+
+
 # circleshape overrides
 
     def draw(self, screen):
@@ -92,6 +107,11 @@ class Player(CircleShape):
 
     def update(self, dt):
         keys = pygame.key.get_pressed()
+
+        self.position += (self.velocity * dt);
+
+        if not self.is_alive():
+            return
 
         # MOVEMENT CONTROLS + MOVEMENT
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
@@ -108,23 +128,6 @@ class Player(CircleShape):
 
         if keys[pygame.K_q]:
             self.accel(dt, -self.velocity.normalize())
-
-        newPos = self.position + (self.velocity * dt);
-        # Bound the player to the screen
-        # Wrap around if they have traveled too far
-        # DISABLE FOR NOW - REVISIT LATER
-        '''
-        if (newPos.x < 0):
-            newPos.update(newPos.x + SCREEN_WIDTH, newPos.y)
-        if (newPos.x > SCREEN_WIDTH):
-            newPos.update(newPos.x - SCREEN_WIDTH, newPos.y)
-        if (newPos.y < SCREEN_HEIGHT):
-            newPos.update(newPos.x, newPos.y + SCREEN_HEIGHT)
-        if (newPos.y > SCREEN_HEIGHT):
-            newPos.update(newPos.x, newPos.y - SCREEN_HEIGHT)
-        '''
-
-        self.position = newPos;
 
         # SHOOTING CONTROLS + SHOOTING
         if self.shotCooldown > 0:
