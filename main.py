@@ -26,7 +26,7 @@ from player import Player
 from shot import Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
-from weaponmodifier import WeaponModifier
+from modifierbase import ModifierBase
 from button import Button
 
 def click_start(state):
@@ -34,6 +34,12 @@ def click_start(state):
 
     for a in state.asteroids:
         a.kill()
+
+    for s in state.shots:
+        s.kill()
+
+    for m in state.modifiers:
+        m.kill()
 
     state.field.reset()
     state.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -95,7 +101,7 @@ def main():
     Shot.containers = (state.updatable, state.drawable, state.shots)
     Asteroid.containers = (state.updatable, state.drawable, state.asteroids)
     AsteroidField.containers = (state.updatable)
-    WeaponModifier.containers = (state.updatable, state.drawable, state.modifiers)
+    ModifierBase.containers = (state.updatable, state.drawable, state.modifiers)
 
     # Create the player at the middle of the screen
     state.player = None
@@ -133,7 +139,7 @@ def main():
             if event.type == pygame.QUIT:
                 return 
 
-        state.updatable.update(dt)
+        state.updatable.update(state, dt)
 
         start_button.update(dt, events)
         how_to_button.update(dt, events)
@@ -146,22 +152,19 @@ def main():
                 state.player.hit()
                 if not state.player.is_alive():
                     state.in_menu = "END"
+                else:
+                    a.kill()
 
             
             for s in state.shots:
                 if a.circle_collision(s):
                     s.player.scoreOnAsteroidKill(a)
-                    if s.player.score > next_modifier_spawn:
-                        next_modifier_spawn += modifier_spawn_threshold
-                        p,v = state.field.generateSpawn(MODIFIER_RADIUS)
-                        wmod = WeaponModifier(p.x, p.y)
-                        wmod.velocity = v
                     a.split()
                     s.kill()
 
         for m in state.modifiers:
             if state.player and state.player.collideCircle(m):
-                state.player.shot_interval_modifier *= m.shot_interval_modifier
+                m.apply_to_player(state.player)
                 m.kill()
 
         # Refresh the canvas

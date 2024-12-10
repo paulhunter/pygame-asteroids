@@ -2,12 +2,16 @@ import pygame
 import random
 
 from asteroid import Asteroid
+from weaponmodifier import WeaponModifier
+from shieldmodifier import ShieldModifier
 from constants import ASTEROID_KINDS \
                     , ASTEROID_SPAWN_INTERVAL \
                     , ASTEROID_MIN_RADIUS \
                     , ASTEROID_MAX_RADIUS \
                     , SCREEN_HEIGHT \
-                    , SCREEN_WIDTH
+                    , SCREEN_WIDTH \
+                    , MODIFIER_SPAWN_INTERVAL \
+                    , MODIFIER_RADIUS
 
 class AsteroidField(pygame.sprite.Sprite):
     containers = None
@@ -53,18 +57,27 @@ class AsteroidField(pygame.sprite.Sprite):
         else:
             super().__init__()
 
-        self.asteroid_spawn_timer = 0.0
-        self.asteroid_spawn_count = 0
+        self.reset()
 
 
     def reset(self):
         self.asteroid_spawn_timer = 0.0
         self.asteroid_spawn_count = 0
 
+        self.modifier_spawn_threshold = MODIFIER_SPAWN_INTERVAL
+        self.modifier_spawn_count = 0
 
-    def spawn(self, radius, position, velocity):
+
+    def spawn_asteroid(self, radius, position, velocity):
         asteroid = Asteroid(position.x, position.y, radius)
         asteroid.velocity = velocity
+
+    def spawn_modifier(self, position, velocity):
+        k = random.randint(0, 100)
+        if (k > 20):
+            ShieldModifier(position.x, position.y, velocity)
+        else:
+            WeaponModifier(position.x, position.y, velocity)
     
 
     def generateSpawn(self, radius):
@@ -77,17 +90,24 @@ class AsteroidField(pygame.sprite.Sprite):
         return (position, velocity)
 
 
-    def update(self, dt):
+    def update(self, state, dt):
         self.asteroid_spawn_timer += dt
         
-        if (self.asteroid_spawn_timer > ASTEROID_SPAWN_INTERVAL):
+        if self.asteroid_spawn_timer > ASTEROID_SPAWN_INTERVAL:
             self.asteroid_spawn_timer = 0
 
             # spawn a new asteroid out of view at a random edge
             kind = random.randint(1, ASTEROID_KINDS)
             radius = kind * ASTEROID_MIN_RADIUS
             position, velocity = self.generateSpawn(radius)
-            self.spawn(radius, position, velocity)
+            self.spawn_asteroid(radius, position, velocity)
             self.asteroid_spawn_count += 1
+
+        if state.player != None and self.modifier_spawn_threshold < state.player.score:
+            position, velocity = self.generateSpawn(MODIFIER_RADIUS)
+            self.spawn_modifier(position, velocity)
+
+            self.modifier_spawn_threshold *= 2.1
+            self.modifier_spawn_count += 1
 
 

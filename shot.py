@@ -20,12 +20,8 @@ class Shot(CircleShape):
         pygame.draw.circle(screen, "yellow", self.position, self.radius, 2)
 
 
-    def update(self, dt):
-        newPos = self.position + (self.velocity * dt)
-        self.position = newPos
-        if (newPos.x > SCREEN_WIDTH + SHOT_RADIUS
-            or newPos.x < 0 - SHOT_RADIUS
-            or newPos.y > SCREEN_HEIGHT + SHOT_RADIUS
-            or newPos.y < 0 - SHOT_RADIUS):
+    def update(self, state, dt):
+        self.position += self.velocity * dt
+        if self.out_of_bounds():
             self.kill()
         

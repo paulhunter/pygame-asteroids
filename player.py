@@ -101,11 +101,17 @@ class Player(CircleShape):
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
+        if self.shield_level > 0:
+            pygame.draw.circle(screen, "blue", self.position, self.radius + 2, 2)
+        if self.shield_level > 1:
+            pygame.draw.circle(screen, "blue", self.position, self.radius + 5, 2)
+        if self.shield_level > 2:
+            pygame.draw.circle(screen, "blue", self.position, self.radius + 8, 2)
         # Circlular Boundary
         # pygame.draw.circle(screen, "blue", self.position, self.radius, 2)
 
 
-    def update(self, dt):
+    def update(self, state, dt):
         keys = pygame.key.get_pressed()
 
         self.position += (self.velocity * dt);

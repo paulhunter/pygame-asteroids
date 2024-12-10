@@ -45,7 +45,6 @@ class Asteroid(CircleShape):
 
 
 # circleshape overrides
-
     def draw(self, screen):
         # cast the shape points over the current position to create the 
         # polygon to visualize on screen
@@ -53,11 +52,9 @@ class Asteroid(CircleShape):
         for p in self.__points:
             ps.append(self.position + p)
         pygame.draw.polygon(screen, "white", ps, 2)
-        
-        # pygame.draw.circle(screen, "white", self.position, self.radius, 2)
 
 
-    def update(self, dt):
+    def update(self, state, dt):
         self.position += (self.velocity * dt)
         if self.out_of_bounds():
             self.kill()

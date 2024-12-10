@@ -1,17 +1,16 @@
 import pygame
 
-from constants import MODIFIER_RADIUS \
-                    , SCREEN_WIDTH \
-                    , SCREEN_HEIGHT
-from circleshape import CircleShape
+from modifierbase import ModifierBase
 
-class WeaponModifier(CircleShape):
-    containers = None
-
-    def __init__(self, x, y):
-        super().__init__(x, y, MODIFIER_RADIUS)
+class WeaponModifier(ModifierBase):
+    def __init__(self, x, y, velocity = None):
+        super().__init__(x, y, velocity)
 
         self.shot_interval_modifier = 0.9
+
+    def apply_to_player(self, player):
+        player.shot_interval_modifier *= self.shot_interval_modifier
+
 
     def draw(self, screen):
         pygame.draw.circle(screen, "yellow", self.position, self.radius, 2)
@@ -31,9 +30,8 @@ class WeaponModifier(CircleShape):
                             2,
                             2)
 
-    def update(self, dt):
-        self.position += (self.velocity * dt)
-        if self.out_of_bounds():
-            self.kill()
+
+    def update(self, state, dt):
+        super().update(state, dt)
 
 
