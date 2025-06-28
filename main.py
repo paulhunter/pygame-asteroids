@@ -42,6 +42,7 @@ def click_start(state):
         m.kill()
 
     state.field.reset()
+    # Create the player at the center of the screen.
     state.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
 def click_main_menu(state):
@@ -53,7 +54,6 @@ def click_quit(state):
 
 
 def main():
-
     # Init the pygame engine and create our canvas
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -103,8 +103,8 @@ def main():
     AsteroidField.containers = (state.updatable)
     ModifierBase.containers = (state.updatable, state.drawable, state.modifiers)
 
-    # Create the player at the middle of the screen
-    state.player = None
+    # Create the player at a later time.
+    state.player = None;
 
     # Create the asteroid field
     state.field = AsteroidField()
@@ -122,8 +122,7 @@ def main():
     quit_button = Button(50, 590, 260, 80, "Quit")
     quit_button.onClick = lambda: click_quit(state)
 
-
-    # Modifier Spawn Paramters
+    # Spawn Modifier Parameters
     modifier_spawn_threshold = 20
     next_modifier_spawn = modifier_spawn_threshold
 
@@ -175,6 +174,7 @@ def main():
             d.draw(screen)
 
         if state.in_menu == None:
+            # Game State Render
             score_text = font.render(f"{state.player.score}", False, "yellow", "black")
             screen.blit(score_text, (10,10))
 
@@ -204,6 +204,8 @@ def main():
 
         # Stall til end of frame, and capture the delta-time in seconds
         dt = clock.tick(60) / 1000
+
+    # Shutdown Logic?
         
 
 if __name__ == "__main__":
