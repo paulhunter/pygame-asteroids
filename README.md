@@ -34,7 +34,8 @@ Asteroids come in multiple sizes. When larger asteroids are blasted, they often 
 Periodically you will spot non-asteroid objects floating through space. These are ship modifiers, upgrades to your ship.
 
 ### Fire Rate Increase
-[!Image of a Fire Rate Modifier](https://github.com/paulhunter/pygame-asteroids/blob/main/wiki-content/fire-rate-modifier.png)
+![Image of a Fire Rate Modifier](./wiki-content/fire-rate-modifier.png)
+
 This will increase your blasters fire rate. The effect stacks are more modifiers are collected. 
 
 ### Shield Generators
