@@ -34,7 +34,7 @@ Asteroids come in multiple sizes. When larger asteroids are blasted, they often 
 Periodically you will spot non-asteroid objects floating through space. These are ship modifiers, upgrades to your ship.
 
 ### Fire Rate Increase
-[NEED AN IMAGE HERE]()
+[!Image of a Fire Rate Modifier](./wiki-content/fire-rate-modifier.png)
 This will increase your blasters fire rate. The effect stacks are more modifiers are collected. 
 
 ### Shield Generators
