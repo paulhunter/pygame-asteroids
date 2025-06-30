@@ -36,11 +36,12 @@ Periodically you will spot non-asteroid objects floating through space. These ar
 ### Fire Rate Increase
 ![Image of a Fire Rate Modifier](./wiki-content/fire-rate-modifier.png)
 
-This will increase your blasters fire rate. The effect stacks are more modifiers are collected. 
+This will increase your blaster's fire rate. The effect stacks as more modifiers are collected. 
 
 ### Shield Generators
-[NEED AN IMAGE HERE]()
-Adds a shield field to your ship. Shields collapse when the come into contact with an asteroid, disipating its total energy into the rock and destroying it completely.
+![Image of a Shield Modifier](./wiki-content/shield-modifier.png)
+
+Adds a temporary shield to your ship. Shields collapse when they come into contact with an asteroid, disipating its total energy into the rock and destroying it completely.
 
 
 # Behind the Scenes
