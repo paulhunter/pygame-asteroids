@@ -90,3 +90,10 @@ The projection of the circles origin onto the line segment you say - how does on
 ### Optimizations via Geometry Constraints
 
 ### Circles First
+
+When checking for collisions, simplified geometries can be used to quickly
+evaluate if two shapes are even close enough to one another to collide. For example,
+we've already seen how arithmetically simple it is to check if two circles intersect,
+if we have a more complex geometry, like a polygon, we can use a circular bounding
+region to create a fast preliminary check before evaluating a collision with a more
+intensive polygon algorithm.
