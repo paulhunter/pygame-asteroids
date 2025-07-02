@@ -1,18 +1,3 @@
-'''
-Running this Game
-Navigate to the project directory and enable the python virtual environment
-
-source venv/bin/activate
-
-You should see your terminal prompt now prepended with "(venv)"
-
-To exit the virtual environment, simply use the following command "deactivate"
-
-Developer Resources
-- Python Style Guide - https://peps.python.org/pep-0008/#imports
-
-'''
-
 # Python Libraries
 import types
 
@@ -27,6 +12,7 @@ from shot import Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from modifierbase import ModifierBase
+from shieldmodifier import ShieldModifier
 from button import Button
 
 def click_start(state):
@@ -48,6 +34,9 @@ def click_start(state):
 def click_main_menu(state):
     state.in_menu = "MAIN"
     state.player.kill()
+
+def click_how_to(state):
+    state.in_menu = "HOW-TO"
 
 def click_quit(state):
     state.quit = True
@@ -115,6 +104,7 @@ def main():
     start_button.onClick = lambda: click_start(state)
 
     how_to_button = Button(50, 180, 260, 80, "How To Play")
+    how_to_button.onClick = lambda: click_how_to(state)
 
     main_menu_button = Button(50, 460, 260, 80, "Main Menu")
     main_menu_button.onClick = lambda: click_main_menu(state)
@@ -126,6 +116,10 @@ def main():
     modifier_spawn_threshold = 20
     next_modifier_spawn = modifier_spawn_threshold
 
+    # How To Menu Assets
+    sub_canvas = pygame.Surface((200,400))
+    how_to_weaponModifier = ShieldModifier(100,200,pygame.Vector2(0,0))
+    how_to_weaponModifier.draw(sub_canvas);
 
     # Game Loop
     while True:
@@ -174,7 +168,7 @@ def main():
             d.draw(screen)
 
         if state.in_menu == None:
-            # Game State Render
+            # Game 
             score_text = font.render(f"{state.player.score}", False, "yellow", "black")
             screen.blit(score_text, (10,10))
 
@@ -198,6 +192,10 @@ def main():
 
             screen.blit(game_over,
                         (int((SCREEN_WIDTH - game_over.get_width())/2), 100))
+
+        if state.in_menu == "HOW-TO":
+            main_menu_button.draw(screen, font)
+            screen.blit(sub_canvas, (100,100));
 
 
         pygame.display.flip()
