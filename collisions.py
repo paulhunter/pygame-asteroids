@@ -5,7 +5,7 @@ import math
 
 def circleLineSegmentCollision(o, radius, a, b):
     ''' Dev Notes:
-        hhttps://github.com/paulhunter/pygame-asteroids/blob/main/README.md#circle-and-a-line-segment
+        https://github.com/paulhunter/pygame-asteroids/blob/main/README.md#circle-and-a-line-segment
 
     TODO - Perhaps we care about the thickness of the render in our collision
     '''
