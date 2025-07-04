@@ -203,11 +203,12 @@ def main():
         # Stall til end of frame, and capture the delta-time in seconds
         dt = clock.tick(60) / 1000
 
-    # Shutdown Logic?
-        
+    # Shutdown
+    # Cleanup
+    pygame.quit()
+
 
 if __name__ == "__main__":
     main()
-    pygame.quit()
 
 
