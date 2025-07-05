@@ -3,10 +3,15 @@ import math
 
 # TODO - Unit Tests as a __main__ ?
 
+def circleCircleCollision(o1, radius1, o2, radius2):
+        d = o1.distance_squared_to(o2)
+        d2 = (radius1 * radius1) + (radius2 * radius2)
+        return (d2 > d)
+
+
 def circleLineSegmentCollision(o, radius, a, b):
     ''' Dev Notes:
         https://github.com/paulhunter/pygame-asteroids/blob/main/README.md#circle-and-a-line-segment
-
     TODO - Perhaps we care about the thickness of the render in our collision
     '''
 
