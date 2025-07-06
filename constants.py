@@ -14,6 +14,7 @@ PLAYER_SHOOT_SPEED = 500 # pixels per second
 PLAYER_SHOOT_COOLDOWN = 0.3 # seconds
 
 SHOT_RADIUS = 3 # pixels
+SHOT_COLOR = "yellow" # Well-known or RGB Color
 
 MODIFIER_RADIUS = 20 # pixels
 MODIFIER_SPAWN_INTERVAL = 20 # points

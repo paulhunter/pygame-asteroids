@@ -1,9 +1,9 @@
-
 import pygame
 from circleshape import CircleShape
 from constants import SCREEN_WIDTH \
                     , SCREEN_HEIGHT \
-                    , SHOT_RADIUS
+                    , SHOT_RADIUS \
+                    , SHOT_COLOR
 
 class Shot(CircleShape):
     containers = None
@@ -17,7 +17,7 @@ class Shot(CircleShape):
 # CircleShape overrides
 
     def draw(self, screen):
-        pygame.draw.circle(screen, "yellow", self.position, self.radius, 2)
+        pygame.draw.circle(screen, SHOT_COLOR, self.position, self.radius, 2)
 
 
     def update(self, state, dt):
