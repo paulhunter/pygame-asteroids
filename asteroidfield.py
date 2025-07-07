@@ -11,7 +11,8 @@ from constants import ASTEROID_KINDS \
                     , SCREEN_HEIGHT \
                     , SCREEN_WIDTH \
                     , MODIFIER_SPAWN_INTERVAL \
-                    , MODIFIER_RADIUS
+                    , MODIFIER_RADIUS \
+                    , MODIFIER_SPAWN_THRESHOLD_FACTOR
 
 class AsteroidField(pygame.sprite.Sprite):
     containers = None
@@ -107,7 +108,7 @@ class AsteroidField(pygame.sprite.Sprite):
             position, velocity = self.generateSpawn(MODIFIER_RADIUS)
             self.spawn_modifier(position, velocity)
 
-            self.modifier_spawn_threshold *= 2.1
+            self.modifier_spawn_threshold *= MODIFIER_SPAWN_THRESHOLD_FACTOR
             self.modifier_spawn_count += 1
 
 

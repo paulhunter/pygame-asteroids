@@ -18,4 +18,5 @@ SHOT_COLOR = "yellow" # Well-known or RGB Color
 
 MODIFIER_RADIUS = 20 # pixels
 MODIFIER_SPAWN_INTERVAL = 20 # points
+MODIFIER_SPAWN_THRESHOLD_FACTOR = 2.1 # Multiplicative Factor for Modifer Spawn
 
