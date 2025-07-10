@@ -16,6 +16,7 @@ from shieldmodifier import ShieldModifier
 from button import Button
 
 def click_start(state):
+    state.sounds.interface_beep.play()
     state.in_menu = None
 
     for a in state.asteroids:
@@ -48,6 +49,8 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
 
+    pygame.mixer.init()
+
     pygame.font.init()
     font = pygame.font.Font(None, 36)
 
@@ -67,7 +70,8 @@ def main():
     state = types.SimpleNamespace()
     state.in_menu = "MAIN"
     state.quit = False
-
+    state.sounds = types.SimpleNamespace()
+    state.sounds.interface_beep = pygame.mixer.Sound('./sounds/interface-beep.wav')
 
     # all game objects that can be updated.
     state.updatable = pygame.sprite.Group()

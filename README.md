@@ -102,3 +102,15 @@ we've already seen how arithmetically simple it is to check if two circles inter
 if we have a more complex geometry, like a polygon, we can use a circular bounding
 region to create a fast preliminary check before evaluating a collision with a more
 intensive polygon algorithm.
+
+## Game Engine + Mechanics
+
+
+## Attribution
+
+### Audio
+All audio files were pulled from the GDC 2019 provided collection, available for
+use from [here](https://sonniss.com/gameaudiogdc/).
+
+interface-beep - Part 1/SciFi Interface/Beep
+
