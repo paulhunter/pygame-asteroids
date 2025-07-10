@@ -30,6 +30,7 @@ class Player(CircleShape):
         self.score = 0
         super().__init__(x, y, PLAYER_RADIUS)
 
+        self.frame = 0 # animation frame
         self.thrusting = False # Is ship firing the main thruster?
         self.shot_interval_modifier = 1.0
         self.shield_level = 0
@@ -114,7 +115,7 @@ class Player(CircleShape):
             a,b,c = self.triangle()
             m = b.lerp(c, 0.5)
             m += (m - a.lerp(m, 0.7))
-            pygame.draw.circle(screen, "yellow", m, 10, 2)
+            pygame.draw.circle(screen, "yellow", m, 10-self.frame, 2)
 
         # Circlular Boundary
         # pygame.draw.circle(screen, "blue", self.position, self.radius, 2)
@@ -128,7 +129,10 @@ class Player(CircleShape):
         if not self.is_alive():
             return
 
+
+
         # MOVEMENT CONTROLS + MOVEMENT
+        self.frame = (self.frame + 1) % 4
         self.thrusting = False
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.rotate(-dt)
