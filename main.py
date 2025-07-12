@@ -176,6 +176,7 @@ def main():
             score_text = font.render(f"{state.player.score}", False, "yellow", "black")
             screen.blit(score_text, (10,10))
 
+            # Render and display asteroid and shot count.
             asteroid_count_text = font.render(f"A:{len(state.asteroids)}, S:{len(state.shots)}", False, "yellow", "black")
             screen.blit(asteroid_count_text,
                 (
@@ -183,6 +184,7 @@ def main():
                 SCREEN_HEIGHT - 10 - asteroid_count_text.get_height())
                 )
 
+        # On the title screen.
         if state.in_menu == "MAIN":
             start_button.draw(screen, font)
             how_to_button.draw(screen, font)
@@ -190,6 +192,7 @@ def main():
 
             screen.blit(title, (SCREEN_WIDTH - title.get_width() - 150, 100))
 
+        # Game over screen
         if state.in_menu == "END":
             main_menu_button.draw(screen, font)
             quit_button.draw(screen, font)
@@ -197,17 +200,19 @@ def main():
             screen.blit(game_over,
                         (int((SCREEN_WIDTH - game_over.get_width())/2), 100))
 
+        # in the How-to menu off the main menu.
         if state.in_menu == "HOW-TO":
             main_menu_button.draw(screen, font)
             screen.blit(sub_canvas, (100,100));
 
-
+        # Update push the frame to the display.
         pygame.display.flip()
 
         # Stall til end of frame, and capture the delta-time in seconds
         dt = clock.tick(60) / 1000
 
-    # Shutdown
+    # Shutdown signal given..
+    
     # Cleanup
     pygame.quit()
 
