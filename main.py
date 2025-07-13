@@ -164,7 +164,8 @@ def main():
                 m.apply_to_player(state.player)
                 m.kill()
 
-        # Refresh the canvas
+        # Wipe the frame, and 'blit' the background image onto it - then draw
+        # the scene.
         screen.blit(bg, (0,0))
 
         # drawable.draw(screen) - Can't be used as it expects images
@@ -205,14 +206,14 @@ def main():
             main_menu_button.draw(screen, font)
             screen.blit(sub_canvas, (100,100));
 
-        # Update push the frame to the display.
+        # Frame day complete, push the frame to the display.
         pygame.display.flip()
 
         # Stall til end of frame, and capture the delta-time in seconds
         dt = clock.tick(60) / 1000
 
     # Shutdown signal given..
-    
+
     # Cleanup
     pygame.quit()
 
