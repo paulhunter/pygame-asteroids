@@ -105,6 +105,10 @@ intensive polygon algorithm.
 
 ## Game Engine + Mechanics
 
+### Conventions
+Rotations are measured clockwise from north. The Y axis of the screen runs south.
+
+### Circles
 
 ## Attribution
 
