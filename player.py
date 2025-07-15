@@ -1,8 +1,6 @@
 '''
-Player
-
-Represents the player, visualized as a triangle
-
+player.py
+Represents the player, visualized as a triangle, and its actions as an entity.
 '''
 
 import pygame
@@ -32,9 +30,9 @@ class Player(CircleShape):
 
         self.frame = 0 # animation frame
         self.thrusting = False # Is ship firing the main thruster?
-        self.shot_interval_modifier = 1.0
+        self.shot_interval_modifier = 1.0 # larger value, greater interval, slower rate of fire.
         self.shield_level = 0
-        self.hit_points = 1
+        self.hit_points = 1 # Number of collisions the ship will sustain.
 
 
     def forward(self):
@@ -100,7 +98,6 @@ class Player(CircleShape):
 
 
 # circleshape overrides
-
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
         if self.shield_level > 0:
@@ -128,8 +125,6 @@ class Player(CircleShape):
 
         if not self.is_alive():
             return
-
-
 
         # MOVEMENT CONTROLS + MOVEMENT
         self.frame = (self.frame + 1) % 4
