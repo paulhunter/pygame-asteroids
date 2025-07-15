@@ -107,15 +107,11 @@ class Player(CircleShape):
         if self.shield_level > 2:
             pygame.draw.circle(screen, "blue", self.position, self.radius + 8, 2)
 
-
         if self.thrusting:
             a,b,c = self.triangle()
             m = b.lerp(c, 0.5)
             m += (m - a.lerp(m, 0.7))
             pygame.draw.circle(screen, "yellow", m, 10-self.frame, 2)
-
-        # Circlular Boundary
-        # pygame.draw.circle(screen, "blue", self.position, self.radius, 2)
 
 
     def update(self, state, dt):
