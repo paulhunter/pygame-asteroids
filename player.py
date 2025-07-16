@@ -117,7 +117,8 @@ class Player(CircleShape):
     def update(self, state, dt):
         keys = pygame.key.get_pressed()
 
-        self.position += (self.velocity * dt);
+        # The player is bound to the play area within the game engine
+        self.position += (self.velocity * dt)
 
         if not self.is_alive():
             return

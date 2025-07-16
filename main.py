@@ -83,9 +83,6 @@ def main():
     state.shots = pygame.sprite.Group()
     # all player modifiers
     state.modifiers = pygame.sprite.Group()
-
-    # Time Delta
-    dt = 0
     
     # Configure the applicable containers for the given sprite types
     # Note - As long as these are set, pygame.sprite.Sprite will automatically
@@ -125,6 +122,9 @@ def main():
     how_to_weaponModifier = ShieldModifier(100,200,pygame.Vector2(0,0))
     how_to_weaponModifier.draw(sub_canvas);
 
+    # Time Delta - in seconds
+    dt = 0.0
+
     # Game Loop
     while True:
         if state.quit:
@@ -147,17 +147,15 @@ def main():
         for a in state.asteroids:
             if state.player and state.player.collideCircle(a):
                 state.player.hit()
-                if not state.player.is_alive():
-                    state.in_menu = "END"
-                else:
+                if state.player.is_alive():
                     a.kill()
-
             
             for s in state.shots:
                 if a.circle_collision(s):
                     s.player.scoreOnAsteroidKill(a)
                     a.split()
                     s.kill()
+
 
         for m in state.modifiers:
             if state.player and state.player.collideCircle(m):
@@ -184,6 +182,13 @@ def main():
                 SCREEN_WIDTH - 10 - asteroid_count_text.get_width(),
                 SCREEN_HEIGHT - 10 - asteroid_count_text.get_height())
                 )
+
+            if not state.field.playArea.collidepoint(state.player.position):
+                state.player.hit()
+
+            if not state.player.is_alive():
+                state.in_menu = "END"
+
 
         # On the title screen.
         if state.in_menu == "MAIN":
