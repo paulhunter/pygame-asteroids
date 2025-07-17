@@ -11,7 +11,9 @@
 
 # Architecture / Design Work
 - Math Optimization / Memorization Patterns
+    - Pre-compute and store rather than derive each time
 - Animations
 - Screens / Interface Engine
 - Sound Engine / Game Sounds
+
 

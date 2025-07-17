@@ -16,8 +16,11 @@ class Button:
         self.on_hover_color = None
         self.on_press_color = None
 
+        # true when mouse is over the button's container
         self.__hover = False
+        # true when left mouse button pressed down within the bounds of the button
         self.__mouse_down = False
+        # rectangle defining the area of the button
         self.__rect = pygame.Rect(  self.position.x,
                                     self.position.y,
                                     self.width,
