@@ -24,7 +24,7 @@ class Player(CircleShape):
     def __init__(self, x, y):
         # degrees clockwise from north
         self.rotation = 0
-        self.shotCooldown = 0
+        self.shot_cooldown = 0
         self.score = 0
         super().__init__(x, y, PLAYER_RADIUS)
 
@@ -111,7 +111,7 @@ class Player(CircleShape):
             a,b,c = self.triangle()
             m = b.lerp(c, 0.5)
             m += (m - a.lerp(m, 0.7))
-            pygame.draw.circle(screen, "yellow", m, 10-self.frame, 2)
+            pygame.draw.circle(screen, "yellow", m, 10-self.frame, 3)
 
 
     def update(self, state, dt):
@@ -143,10 +143,10 @@ class Player(CircleShape):
             self.accel(dt, -self.velocity.normalize())
 
         # SHOOTING CONTROLS + SHOOTING
-        if self.shotCooldown > 0:
-            self.shotCooldown -= dt
+        if self.shot_cooldown > 0:
+            self.shot_cooldown -= dt
         elif keys[pygame.K_SPACE]:
-            self.shotCooldown = PLAYER_SHOOT_COOLDOWN * self.shot_interval_modifier
+            self.shot_cooldown = PLAYER_SHOOT_COOLDOWN * self.shot_interval_modifier
             self.shoot()
 
 
