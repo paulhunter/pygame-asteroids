@@ -9,7 +9,6 @@ from constants import ASTEROID_MIN_RADIUS \
 class Asteroid(CircleShape):
     containers = None
 
-
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
         

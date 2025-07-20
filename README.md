@@ -1,5 +1,7 @@
 # Summary
-This project is built on [PyGame](https://www.pygame.org/wiki/about) and inspired by the [Build Asteroids](https://www.boot.dev/lessons/5be3e3bd-efb5-4664-a9e9-7111be783271) guided project on [Boot.dev](https://www.boot.dev/tracks/backend).
+This project is built on [PyGame](https://www.pygame.org/wiki/about) and
+inspired by the [Build Asteroids](https://www.boot.dev/lessons/5be3e3bd-efb5-4664-a9e9-7111be783271)
+guided project on [Boot.dev](https://www.boot.dev/tracks/backend).
 
 After completing the lessons of a project I have further enriched the game with 
 features, optimizations, and additional gameplay aspects - some of which will be 
@@ -7,7 +9,8 @@ discussed below in this README.
 
 # How to run this project
 
-This project uses Python 3, Python Virtual Environments, and the Package Installer for Python, PIP
+This project uses Python 3, Python Virtual Environments, and the Package
+Installer for Python, PIP
 
 1. Install `python`
 1. Clone this repository
@@ -28,20 +31,25 @@ This project uses Python 3, Python Virtual Environments, and the Package Install
 - SPACE - Fire Blaster 
 
 ## Asteroids
-Asteroids come in multiple sizes. When larger asteroids are blasted, they often break into small pieces. 
+Asteroids come in multiple sizes. When larger asteroids are blasted, they often
+break into small pieces.
 
 ## Ship Modifiers
-Periodically you will spot non-asteroid objects floating through space. These are ship modifiers, upgrades to your ship.
+Periodically you will spot non-asteroid objects floating through space. These
+are ship modifiers, upgrades to your ship.
 
 ### Fire Rate Increase
 ![Image of a Fire Rate Modifier](./wiki-content/fire-rate-modifier.png)
 
-This will increase your blaster's fire rate. The effect stacks as more modifiers are collected. 
+This will increase your blaster's fire rate. The effect stacks as more modifiers
+are collected.
 
 ### Shield Generators
 ![Image of a Shield Modifier](./wiki-content/shield-modifier.png)
 
-Adds a temporary shield to your ship. Shields collapse when they come into contact with an asteroid, disipating its total energy into the rock and destroying it completely.
+Adds a temporary shield to your ship. Shields collapse when they come into
+contact with an asteroid, disipating its total energy into the rock and
+destroying it completely.
 
 
 # Behind the Scenes
@@ -90,23 +98,25 @@ square root calculations.
 
 ### Dot Product of Vectors
 
-The projection of the circles origin onto the line segment you say - how does one find that? Dot Products!
+The projection of the circles origin onto the line segment you say - how does
+one find that? Dot Products!
 
 ### Optimizations via Geometry Constraints
 
 ### Circles First
 
 When checking for collisions, simplified geometries can be used to quickly
-evaluate if two shapes are even close enough to one another to collide. For example,
-we've already seen how arithmetically simple it is to check if two circles intersect,
-if we have a more complex geometry, like a polygon, we can use a circular bounding
-region to create a fast preliminary check before evaluating a collision with a more
-intensive polygon algorithm.
+evaluate if two shapes are even close enough to one another to collide. For
+example, we've already seen how arithmetically simple it is to check if two
+circles intersect, if we have a more complex geometry, like a polygon, we can
+use a circular bounding region to create a fast preliminary check before
+evaluating a collision with a more intensive polygon algorithm.
 
 ## Game Engine + Mechanics
 
 ### Conventions
-Rotations are measured clockwise from north. The Y axis of the screen runs south.
+Rotations are measured clockwise from north. The Y axis of the screen runs
+south.
 
 ### Circles
 
