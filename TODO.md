@@ -1,5 +1,4 @@
 
-
 # Features / Content / Gameplay
 
 - Multiple Lives
@@ -8,6 +7,15 @@
 - Shatter Ship after Death
 - How-To Play Screen/Page
     - Bonus points for animations on hover
+- Rate of Asteroid Spawn increases over time
+    - Or another way of increasing difficulty over time. 
+- Sonud Effects
+    - Buttons
+        - Hover
+    - Ship Thrust
+    - Asteroid Burst
+    - Ship Shot
+    - Music?
 
 # Architecture / Design Work
 - Math Optimization / Memorization Patterns
