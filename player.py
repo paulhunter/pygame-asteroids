@@ -15,7 +15,7 @@ from constants import PLAYER_RADIUS \
                     , SHOT_RADIUS \
                     , SCREEN_WIDTH \
                     , SCREEN_HEIGHT
-from collisions import circleLineSegmentCollision
+from collisions import circle_and_line_segment_collision
 
 class Player(CircleShape):
     containers = None
@@ -70,19 +70,19 @@ class Player(CircleShape):
         s.velocity = (self.forward() * PLAYER_SHOOT_SPEED) + self.velocity
 
 
-    def collideCircle(self, asteroid):
+    def collide_circle(self, asteroid):
         a,b,c = self.triangle()
-        if circleLineSegmentCollision(asteroid.position, asteroid.radius, a, b):
+        if circle_and_line_segment_collision(asteroid.position, asteroid.radius, a, b):
             return True
-        elif circleLineSegmentCollision(asteroid.position, asteroid.radius, b, c):
+        elif circle_and_line_segment_collision(asteroid.position, asteroid.radius, b, c):
             return True
-        elif circleLineSegmentCollision(asteroid.position, asteroid.radius, c, a):
+        elif circle_and_line_segment_collision(asteroid.position, asteroid.radius, c, a):
             return True
         else:
             return False
 
 
-    def scoreOnAsteroidKill(self, asteroid):
+    def score_on_asteroid_kill(self, asteroid):
         self.score += int(60 / asteroid.radius)
 
 

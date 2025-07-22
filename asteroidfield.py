@@ -84,7 +84,7 @@ class AsteroidField(pygame.sprite.Sprite):
             WeaponModifier(position.x, position.y, velocity)
     
 
-    def generateSpawn(self, radius):
+    def generate_spawn(self, radius):
         # radius - Size of the sprite to the spawned
         edge = random.choice(self.edges)
         speed = random.randint(40,100)
@@ -103,12 +103,12 @@ class AsteroidField(pygame.sprite.Sprite):
             # spawn a new asteroid out of view at a random edge
             kind = random.randint(1, ASTEROID_KINDS)
             radius = kind * ASTEROID_MIN_RADIUS
-            position, velocity = self.generateSpawn(radius)
+            position, velocity = self.generate_spawn(radius)
             self.spawn_asteroid(radius, position, velocity)
             self.asteroid_spawn_count += 1
 
         if state.player != None and self.modifier_spawn_threshold < state.player.score:
-            position, velocity = self.generateSpawn(MODIFIER_RADIUS)
+            position, velocity = self.generate_spawn(MODIFIER_RADIUS)
             self.spawn_modifier(position, velocity)
 
             self.modifier_spawn_threshold *= MODIFIER_SPAWN_THRESHOLD_FACTOR

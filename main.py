@@ -145,20 +145,20 @@ def main():
 
 
         for a in state.asteroids:
-            if state.player and state.player.collideCircle(a):
+            if state.player and state.player.collide_circle(a):
                 state.player.hit()
                 if state.player.is_alive():
                     a.kill()
             
             for s in state.shots:
                 if a.circle_collision(s):
-                    s.player.scoreOnAsteroidKill(a)
+                    s.player.score_on_asteroid_kill(a)
                     a.split()
                     s.kill()
 
 
         for m in state.modifiers:
-            if state.player and state.player.collideCircle(m):
+            if state.player and state.player.collide_circle(m):
                 m.apply_to_player(state.player)
                 m.kill()
 

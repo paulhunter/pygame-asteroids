@@ -1,7 +1,7 @@
 import pygame
 
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
-from collisions import circleCircleCollision
+from collisions import circle_circle_collision
 
 class CircleShape(pygame.sprite.Sprite):
 
@@ -20,7 +20,7 @@ class CircleShape(pygame.sprite.Sprite):
     # self - CircleShape
     # c - CircleShape
     def circle_collision(self, c):
-        return circleCircleCollision(self.position, self.radius, c.position, c.radius)
+        return circle_circle_collision(self.position, self.radius, c.position, c.radius)
 
 
     def out_of_bounds(self):

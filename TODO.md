@@ -24,4 +24,8 @@
 - Screens / Interface Engine
 - Sound Engine / Game Sounds
 
+# DevOps
+- Naming Conventions
+    - Incorporate linter
+
 
