@@ -1,6 +1,8 @@
 
 # Features / Content / Gameplay
 
+- QoL - Polygon Intersection for Asteroids with Player to avoid death when
+    visually the player didn't collide with the asteroid.
 - Multiple Lives
 - Persist a High Score
     - Leader Board? Arcade Machine Style

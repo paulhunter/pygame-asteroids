@@ -12,9 +12,7 @@ from constants import PLAYER_RADIUS \
                     , PLAYER_MAX_SPEED \
                     , PLAYER_SHOOT_SPEED \
                     , PLAYER_SHOOT_COOLDOWN \
-                    , SHOT_RADIUS \
-                    , SCREEN_WIDTH \
-                    , SCREEN_HEIGHT
+                    , SHOT_RADIUS
 from collisions import circle_and_line_segment_collision
 
 class Player(CircleShape):
@@ -56,17 +54,17 @@ class Player(CircleShape):
         self.rotation = (self.rotation + (PLAYER_TURN_SPEED * dt)) % 360
 
 
-    def accel(self, dt, dir = None):
-        direction = dir if dir != None else self.forward()
-        newVelocity = self.velocity + (direction * dt * PLAYER_ACCELERATION)
-        if (newVelocity.length() > PLAYER_MAX_SPEED):
-            newVelocity.scale_to_length(PLAYER_MAX_SPEED)
-        self.velocity = newVelocity
+    def accel(self, dt, direction = None):
+        direction = direction if direction is not None else self.forward()
+        new_velocity = self.velocity + (direction * dt * PLAYER_ACCELERATION)
+        if new_velocity.length() > PLAYER_MAX_SPEED:
+            new_velocity.scale_to_length(PLAYER_MAX_SPEED)
+        self.velocity = new_velocity
 
 
     def shoot(self):
-        shotPos = self.position + (self.forward() * PLAYER_RADIUS)
-        s = Shot(shotPos.x, shotPos.y, SHOT_RADIUS, self)
+        shot_pos = self.position + (self.forward() * PLAYER_RADIUS)
+        s = Shot(shot_pos.x, shot_pos.y, SHOT_RADIUS, self)
         s.velocity = (self.forward() * PLAYER_SHOOT_SPEED) + self.velocity
 
 
@@ -74,12 +72,12 @@ class Player(CircleShape):
         a,b,c = self.triangle()
         if circle_and_line_segment_collision(asteroid.position, asteroid.radius, a, b):
             return True
-        elif circle_and_line_segment_collision(asteroid.position, asteroid.radius, b, c):
+        if circle_and_line_segment_collision(asteroid.position, asteroid.radius, b, c):
             return True
-        elif circle_and_line_segment_collision(asteroid.position, asteroid.radius, c, a):
+        if circle_and_line_segment_collision(asteroid.position, asteroid.radius, c, a):
             return True
-        else:
-            return False
+
+        return False
 
 
     def score_on_asteroid_kill(self, asteroid):
@@ -128,7 +126,7 @@ class Player(CircleShape):
         self.thrusting = False
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.rotate(-dt)
-        
+
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             self.rotate(dt)
 
@@ -148,5 +146,3 @@ class Player(CircleShape):
         elif keys[pygame.K_SPACE]:
             self.shot_cooldown = PLAYER_SHOOT_COOLDOWN * self.shot_interval_modifier
             self.shoot()
-
-

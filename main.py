@@ -6,7 +6,7 @@ import pygame
 import pygame.font
 
 # Local Modules
-from constants import *
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from player import Player
 from shot import Shot
 from asteroid import Asteroid
@@ -83,7 +83,7 @@ def main():
     state.shots = pygame.sprite.Group()
     # all player modifiers
     state.modifiers = pygame.sprite.Group()
-    
+
     # Configure the applicable containers for the given sprite types
     # Note - As long as these are set, pygame.sprite.Sprite will automatically
     #       add them to these groups at the time of creation
@@ -94,7 +94,7 @@ def main():
     ModifierBase.containers = (state.updatable, state.drawable, state.modifiers)
 
     # Create the player at a later time.
-    state.player = None;
+    state.player = None
 
     # Create the asteroid field
     state.field = AsteroidField()
@@ -113,14 +113,10 @@ def main():
     quit_button = Button(50, 590, 260, 80, "Quit")
     quit_button.onClick = lambda: click_quit(state)
 
-    # Spawn Modifier Parameters
-    modifier_spawn_threshold = 20
-    next_modifier_spawn = modifier_spawn_threshold
-
     # How To Menu Assets
     sub_canvas = pygame.Surface((200,400))
-    how_to_weaponModifier = ShieldModifier(100,200,pygame.Vector2(0,0))
-    how_to_weaponModifier.draw(sub_canvas);
+    how_to_weapon_modifier = ShieldModifier(100,200,pygame.Vector2(0,0))
+    how_to_weapon_modifier.draw(sub_canvas)
 
     # Time Delta - in seconds
     dt = 0.0
@@ -134,7 +130,7 @@ def main():
         for event in events:
             # Window was closed
             if event.type == pygame.QUIT:
-                return 
+                return
 
         state.updatable.update(state, dt)
 
@@ -149,7 +145,7 @@ def main():
                 state.player.hit()
                 if state.player.is_alive():
                     a.kill()
-            
+
             for s in state.shots:
                 if a.circle_collision(s):
                     s.player.score_on_asteroid_kill(a)
@@ -170,13 +166,15 @@ def main():
         for d in state.drawable:
             d.draw(screen)
 
-        if state.in_menu == None:
-            # Game 
+        if state.in_menu is None:
+            # Game
             score_text = font.render(f"{state.player.score}", False, "yellow", "black")
             screen.blit(score_text, (10,10))
 
             # Render and display asteroid and shot count.
-            asteroid_count_text = font.render(f"A:{len(state.asteroids)}, S:{len(state.shots)}", False, "yellow", "black")
+            asteroid_count_text = font.render(
+                f"A:{len(state.asteroids)}, S:{len(state.shots)}", 
+                False, "yellow", "black")
             screen.blit(asteroid_count_text,
                 (
                 SCREEN_WIDTH - 10 - asteroid_count_text.get_width(),
@@ -209,7 +207,7 @@ def main():
         # in the How-to menu off the main menu.
         if state.in_menu == "HOW-TO":
             main_menu_button.draw(screen, font)
-            screen.blit(sub_canvas, (100,100));
+            screen.blit(sub_canvas, (100,100))
 
         # Frame day complete, push the frame to the display.
         pygame.display.flip()
@@ -225,5 +223,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
