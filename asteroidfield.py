@@ -1,5 +1,5 @@
-import pygame
 import random
+import pygame
 
 from asteroid import Asteroid
 from weaponmodifier import WeaponModifier
@@ -7,7 +7,6 @@ from shieldmodifier import ShieldModifier
 from constants import ASTEROID_KINDS \
                     , ASTEROID_SPAWN_INTERVAL \
                     , ASTEROID_MIN_RADIUS \
-                    , ASTEROID_MAX_RADIUS \
                     , SCREEN_HEIGHT \
                     , SCREEN_WIDTH \
                     , MODIFIER_SPAWN_INTERVAL \
@@ -39,14 +38,14 @@ class AsteroidField(pygame.sprite.Sprite):
             # Top of the screen
             pygame.Vector2(0, 1),
             lambda x, r: pygame.Vector2(
-                x * SCREEN_WIDTH, 
+                x * SCREEN_WIDTH,
                 -r),
         ],
         [
             # Bottom of the screen
-            pygame.Vector2(0, -1), 
+            pygame.Vector2(0, -1),
             lambda x, r: pygame.Vector2(
-                x * SCREEN_WIDTH, 
+                x * SCREEN_WIDTH,
                 SCREEN_HEIGHT + r
             ),
         ],
@@ -68,7 +67,7 @@ class AsteroidField(pygame.sprite.Sprite):
 
         self.modifier_spawn_threshold = MODIFIER_SPAWN_INTERVAL
         self.modifier_spawn_count = 0
-        self.playArea = pygame.Rect(-PLAYER_RADIUS,-PLAYER_RADIUS,
+        self.play_area = pygame.Rect(-PLAYER_RADIUS,-PLAYER_RADIUS,
             SCREEN_HEIGHT+PLAYER_RADIUS, SCREEN_WIDTH+PLAYER_RADIUS)
 
 
@@ -78,11 +77,11 @@ class AsteroidField(pygame.sprite.Sprite):
 
     def spawn_modifier(self, position, velocity):
         k = random.randint(0, 100)
-        if (k > 20):
+        if k > 20:
             ShieldModifier(position.x, position.y, velocity)
         else:
             WeaponModifier(position.x, position.y, velocity)
-    
+
 
     def generate_spawn(self, radius):
         # radius - Size of the sprite to the spawned
@@ -96,7 +95,7 @@ class AsteroidField(pygame.sprite.Sprite):
 
     def update(self, state, dt):
         self.asteroid_spawn_timer += dt
-        
+
         if self.asteroid_spawn_timer > ASTEROID_SPAWN_INTERVAL:
             self.asteroid_spawn_timer = 0
 
@@ -107,11 +106,9 @@ class AsteroidField(pygame.sprite.Sprite):
             self.spawn_asteroid(radius, position, velocity)
             self.asteroid_spawn_count += 1
 
-        if state.player != None and self.modifier_spawn_threshold < state.player.score:
+        if state.player is not None and self.modifier_spawn_threshold < state.player.score:
             position, velocity = self.generate_spawn(MODIFIER_RADIUS)
             self.spawn_modifier(position, velocity)
 
             self.modifier_spawn_threshold *= MODIFIER_SPAWN_THRESHOLD_FACTOR
             self.modifier_spawn_count += 1
-
-

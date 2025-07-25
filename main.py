@@ -181,7 +181,7 @@ def main():
                 SCREEN_HEIGHT - 10 - asteroid_count_text.get_height())
                 )
 
-            if not state.field.playArea.collidepoint(state.player.position):
+            if not state.field.play_area.collidepoint(state.player.position):
                 state.player.hit()
 
             if not state.player.is_alive():
