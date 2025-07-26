@@ -102,16 +102,16 @@ def main():
     # Main Menu Buttons
     # 130 Pixel Vertical Offsets
     start_button = Button(50, 50, 260, 80, "Start")
-    start_button.onClick = lambda: click_start(state)
+    start_button.on_click = lambda: click_start(state)
 
     how_to_button = Button(50, 180, 260, 80, "How To Play")
-    how_to_button.onClick = lambda: click_how_to(state)
+    how_to_button.on_click = lambda: click_how_to(state)
 
     main_menu_button = Button(50, 460, 260, 80, "Main Menu")
-    main_menu_button.onClick = lambda: click_main_menu(state)
+    main_menu_button.on_click = lambda: click_main_menu(state)
 
     quit_button = Button(50, 590, 260, 80, "Quit")
-    quit_button.onClick = lambda: click_quit(state)
+    quit_button.on_click = lambda: click_quit(state)
 
     # How To Menu Assets
     sub_canvas = pygame.Surface((200,400))

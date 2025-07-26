@@ -9,7 +9,7 @@ class Button:
         self.width = width
         self.height = height
         self.text = text
-        self.onClick = None
+        self.on_click = None
 
         self.foreground_color = None
         self.background_color = None
@@ -52,17 +52,18 @@ class Button:
     def update(self, dt, events):
         for ev in events:
             if ev.type == pygame.MOUSEBUTTONDOWN:
-                if (self.onClick != None
+                if (self.on_click is not None
                         and self.__rect.collidepoint(ev.pos)
                         and ev.button == 1):
                     self.__mouse_down = True
 
             if ev.type == pygame.MOUSEBUTTONUP:
                 if (self.__mouse_down
-                    and self.onClick != None
+                    and self.on_click is not None
                     and self.__rect.collidepoint(ev.pos)
                     and ev.button == 1):
-                        self.onClick()
+                    # on release of left button 
+                    self.on_click()
                 self.__mouse_down = False
 
             if ev.type == pygame.MOUSEMOTION:
@@ -72,5 +73,3 @@ class Button:
                 elif (not self.__hover
                     and self.__rect.collidepoint(ev.pos)):
                     self.__hover = True
-
-        
