@@ -34,12 +34,12 @@ class CircleShape(pygame.sprite.Sprite):
             return False
 
     def draw(self, screen):
-        # sub-classes must override
+        # concrete-classes must override
         pass
 
 
     def update(self, state, dt):
-        # sub-classes must override
+        # concrete-classes must override
         pass
 
         

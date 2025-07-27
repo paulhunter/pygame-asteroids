@@ -31,7 +31,4 @@ class WeaponModifier(ModifierBase):
                             2)
 
 
-    def update(self, state, dt):
-        super().update(state, dt)
-
-
+    # def update(self, state, dt): [No override, call super]

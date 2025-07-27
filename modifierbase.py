@@ -1,3 +1,6 @@
+'''
+Abstract representing any object capable of modifying a player objects attributes.
+'''
 import pygame
 
 from constants import MODIFIER_RADIUS
@@ -8,18 +11,19 @@ class ModifierBase(CircleShape):
 
     def __init__(self, x, y, velocity = None):
         super().__init__(x, y, MODIFIER_RADIUS)
-        if velocity != None:
+        if velocity is not None:
             self.velocity = velocity
 
 
     def apply_to_player(self, player):
-        # pass to implementer
+        '''abstract - apply modifier effect to player
+            implemented by the concrete class'''
         pass
 
 
 # CircleShape Overrides
     def draw(self, screen):
-        # pass to implementer
+        # pass to concrete class.
         pass
 
 
@@ -27,4 +31,3 @@ class ModifierBase(CircleShape):
         self.position += self.velocity * dt
         if self.out_of_bounds():
             self.kill()
-
