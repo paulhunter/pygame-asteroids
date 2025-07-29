@@ -11,7 +11,7 @@ class EntityBase:
         self.rotation = 0 # Positive is clockwise rotation in degrees.
 
         self.velocity = pygame.Vector2(0,0)
-        self.rotation_velocity = 0 # Positive is clockwise rotation in degrees.
+        self.rotation_speed = 0 # Positive is clockwise rotation in degrees/sec.
 
     def update(self, state, dt):
         """update
@@ -19,4 +19,4 @@ class EntityBase:
         provided game state. 
         """
         self.position += self.velocity * dt
-        self.rotation = (self.rotation + (self.rotation_velocity * dt)) % 360
+        self.rotation = (self.rotation + (self.rotation_speed * dt)) % 360

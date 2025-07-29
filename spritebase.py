@@ -8,8 +8,8 @@ import pygame
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class SpriteBase(pygame.sprite.Sprite):
-    containers = None
     """SpriteBase represents a visual graphic that can be drawn on a screen"""
+    containers = None
 
     def __init__(self):
         if hasattr(self, "containers"):
