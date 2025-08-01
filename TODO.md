@@ -24,6 +24,7 @@
     - Pre-compute and store rather than derive each time
 - Animations
 - Screens / Interface Engine
+- Anti-Aliasing through gfxdraw pygame module
 - Sound Engine / Game Sounds
 
 # DevOps
