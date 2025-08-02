@@ -15,7 +15,7 @@ from constants import PLAYER_RADIUS \
                     , SHOT_RADIUS
 from collisions import circle_and_line_segment_collision
 
-class Player(CircleShape):
+class Player(EntityBase, SpriteBase):
     containers = None
 
 

@@ -6,8 +6,8 @@ import pygame
 
 class EntityBase:
 
-    def __init__(self):
-        self.position = pygame.Vector2(0,0)
+    def __init__(self, pos):
+        self.position = pygame.Vector2(pos.x,pos.y)
         self.rotation = 0 # Positive is clockwise rotation in degrees.
 
         self.velocity = pygame.Vector2(0,0)

@@ -33,7 +33,7 @@ def circle_and_line_segment_collision(o, radius, a, b):
         min_d2 = o.distance_squared_to(p)
         max_d2 = max(o.distance_squared_to(a), o.distance_squared_to(b))
     else:
-        # The nearest and farthest points to the circle will be either end of
+        # The nearest and farthest points to the circle will be at either end of
         # the line segment.
         d1 = o.distance_squared_to(a)
         d2 = o.distance_squared_to(b)
@@ -46,5 +46,3 @@ def circle_and_line_segment_collision(o, radius, a, b):
         return False
     else:
         return True
-
-
