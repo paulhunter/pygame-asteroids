@@ -30,7 +30,7 @@ def click_start(state):
 
     state.field.reset()
     # Create the player at the center of the screen.
-    state.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    state.player = Player(pygame.Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
 
 def click_main_menu(state):
     state.in_menu = "MAIN"
