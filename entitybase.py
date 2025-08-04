@@ -12,6 +12,8 @@ class EntityBase:
 
         self.velocity = pygame.Vector2(0,0)
         self.rotation_speed = 0 # Positive is clockwise rotation in degrees/sec.
+        # Ensure MRO for Sprite Base if child derives from both.
+        super().__init__()
 
     def update(self, state, dt):
         """update

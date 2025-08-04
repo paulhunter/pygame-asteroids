@@ -2,9 +2,10 @@
 player.py
 Represents the player, visualized as a triangle, and its actions as an entity.
 '''
-
+import types
 import pygame
-from circleshape import CircleShape
+from entitybase import EntityBase
+from spritebase import SpriteBase
 from shot import Shot
 from constants import PLAYER_RADIUS \
                     , PLAYER_TURN_SPEED \
@@ -18,13 +19,15 @@ from collisions import circle_and_line_segment_collision
 class Player(EntityBase, SpriteBase):
     containers = None
 
-
-    def __init__(self, x, y):
+    def __init__(self, pos):
         # degrees clockwise from north
         self.rotation = 0
         self.shot_cooldown = 0
         self.score = 0
-        super().__init__(x, y, PLAYER_RADIUS)
+        self.radius = PLAYER_RADIUS
+        self.__triangle = None
+        # EntityBase Init
+        super().__init__(pos)
 
         self.frame = 0 # animation frame
         self.thrusting = False # Is ship firing the main thruster?
@@ -40,13 +43,15 @@ class Player(EntityBase, SpriteBase):
 
 
     def triangle(self):
-        forward = self.forward() * self.radius
-        right = forward.rotate(140)
-        left = forward.rotate(220)
+        if self.__triangle is None:
+            self.__triangle = types.SimpleNamespace()
+            self.__triangle.forward = self.forward() * self.radius
+            self.__triangle.right = self.__triangle.forward.rotate(140)
+            self.__triangle.left = self.__triangle.forward.rotate(220)
 
-        a = self.position + forward
-        b = self.position + right
-        c = self.position + left
+        a = self.position + self.__triangle.forward.rotate(self.rotation)
+        b = self.position + self.__triangle.right.rotate(self.rotation)
+        c = self.position + self.__triangle.left.rotate(self.rotation)
         return [a, b, c]
 
 
