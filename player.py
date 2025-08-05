@@ -100,7 +100,7 @@ class Player(EntityBase, SpriteBase):
         return self.hit_points > 0
 
 
-# circleshape overrides
+# spritebase overrides
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
         if self.shield_level > 0:
@@ -117,6 +117,7 @@ class Player(EntityBase, SpriteBase):
             pygame.draw.circle(screen, "yellow", m, 10-self.frame, 3)
 
 
+#entitybase overrides
     def update(self, state, dt):
         keys = pygame.key.get_pressed()
 
@@ -151,3 +152,17 @@ class Player(EntityBase, SpriteBase):
         elif keys[pygame.K_SPACE]:
             self.shot_cooldown = PLAYER_SHOOT_COOLDOWN * self.shot_interval_modifier
             self.shoot()
+
+# DRY Violation - Copy Pasta from circleshape
+    def out_of_bounds(self, bounds):
+        """Check if the circle has left the play area with a visual fudge factor"""
+        b = PLAYER_RADIUS * 2
+        if (self.position.x - b > bounds[1]
+            or self.position.x + b < bounds[0]
+            or self.position.y - b > bounds[3]
+            or self.position.y + b < bounds[2]):
+            print ("check failed")
+            return True
+
+        # Otherwise, we are within bounds.
+        return False

@@ -18,6 +18,9 @@ class AsteroidField(pygame.sprite.Sprite):
     containers = None
 
     # Spawn Zones - Orthogonal Travel Vector + Start Position Function
+    #   Start Position function takes a percentage value to determine its axial
+    #   position along the edge of the screen, and radial size of the object to
+    #   be used as an offset to prevent objects from 'popping' into existence
     edges = [
         [
             # Left side of the screen
@@ -61,6 +64,14 @@ class AsteroidField(pygame.sprite.Sprite):
         self.reset()
 
 
+    def get_play_area(self):
+        # 0: Minimum X
+        # 1: Maximum X
+        # 2: Minimum Y
+        # 3: Maximum Y
+        return (0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
+
+
     def reset(self):
         self.asteroid_spawn_timer = 0.0
         self.asteroid_spawn_count = 0
@@ -74,6 +85,10 @@ class AsteroidField(pygame.sprite.Sprite):
     def spawn_asteroid(self, radius, position, velocity):
         asteroid = Asteroid(position.x, position.y, radius)
         asteroid.velocity = velocity
+        # the Sprite's logic will add the instance to its groups, and the
+        # engine will simulate it in the next frame.
+        self.asteroid_spawn_count += 1
+
 
     def spawn_modifier(self, position, velocity):
         k = random.randint(0, 100)
@@ -84,11 +99,16 @@ class AsteroidField(pygame.sprite.Sprite):
 
 
     def generate_spawn(self, radius):
+        """generate_spawn
+            Return a position and velocity vector at random, provided the 
+            radius of the object to be spawned.
+        """
         # radius - Size of the sprite to the spawned
         edge = random.choice(self.edges)
         speed = random.randint(40,100)
         velocity = edge[0] * speed
-        velocity = velocity.rotate(random.randint(-30, 30))
+        velocity = velocity.rotate(random.randint(-60, 60))
+        # +10 as a fudge factor for visual/drawing style/effects
         position = edge[1](random.uniform(0,1), radius + 10)
         return (position, velocity)
 
@@ -104,9 +124,11 @@ class AsteroidField(pygame.sprite.Sprite):
             radius = kind * ASTEROID_MIN_RADIUS
             position, velocity = self.generate_spawn(radius)
             self.spawn_asteroid(radius, position, velocity)
-            self.asteroid_spawn_count += 1
 
-        if state.player is not None and self.modifier_spawn_threshold < state.player.score:
+
+        if (state.player is not None
+            and self.modifier_spawn_threshold < state.player.score):
+
             position, velocity = self.generate_spawn(MODIFIER_RADIUS)
             self.spawn_modifier(position, velocity)
 

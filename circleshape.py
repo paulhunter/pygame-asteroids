@@ -26,13 +26,15 @@ class CircleShape(pygame.sprite.Sprite):
         return circle_circle_collision(self.position, self.radius, c.position, c.radius)
 
 
-    def out_of_bounds(self):
-        """Check if the circle has left the observable play area"""
+    def out_of_bounds(self, bounds):
+        """Check if the circle has left the play area with a visual
+            fudge factor
+        """
         b = 2 * self.radius
-        if (self.position.x - b > SCREEN_WIDTH
-            or self.position.x + b < 0
-            or self.position.y - b > SCREEN_HEIGHT
-            or self.position.y + b < 0):
+        if (self.position.x - b > bounds[1]
+            or self.position.x + b < bounds[0]
+            or self.position.y - b > bounds[3]
+            or self.position.y + b < bounds[2]):
             return True
 
         # Otherwise, we are within bounds.

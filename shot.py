@@ -22,6 +22,6 @@ class Shot(CircleShape):
 
     def update(self, state, dt):
         self.position += self.velocity * dt
-        if self.out_of_bounds():
+        if self.out_of_bounds(state.field.get_play_area()):
             self.kill()
         
