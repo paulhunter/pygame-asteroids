@@ -30,5 +30,7 @@
 # DevOps
 - Naming Conventions (PEP 8 Style Guide)
     - Incorporate linter script
+- Build and Publish Artifacts
+- Create Work Area in GitHub for Tickets / Issues
 
 
