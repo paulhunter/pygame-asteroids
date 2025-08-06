@@ -28,7 +28,7 @@
 - Sound Engine / Game Sounds
 
 # DevOps
-- Naming Conventions
-    - Incorporate linter
+- Naming Conventions (PEP 8 Style Guide)
+    - Incorporate linter script
 
 
