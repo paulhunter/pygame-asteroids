@@ -4,7 +4,7 @@ can be drawn on a screen.
 """
 import pygame
 
-class LineEntity(EntityBase):
+class LineEntity(pygame.sprite.Sprite):
     containers = None
 
     def __init__(self, a, b, velocity = None, angular_speed = 0):
@@ -25,10 +25,17 @@ class LineEntity(EntityBase):
 
 
     def update(self, state, dt):
+        """update
+        Override the utility hook of the pygame.sprite.Sprite class.
+        """
         #TODO
         pass
 
     def draw(self, screen):
+        """draw
+
+        Note - we are overriding the draw function on the Sprite class
+        """
         #TODO
         pass
 
