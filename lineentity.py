@@ -34,7 +34,8 @@ class LineEntity(pygame.sprite.Sprite):
     def draw(self, screen):
         """draw
 
-        Note - we are overriding the draw function on the Sprite class
+        Note - we are overriding the draw function on the Sprite class in a way
+        that does not respect the original implementation.
         """
         #TODO
         pass
