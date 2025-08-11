@@ -28,6 +28,7 @@ class LineEntity(pygame.sprite.Sprite):
         """update
         Override the utility hook of the pygame.sprite.Sprite class.
         """
+        
         #TODO
         pass
 
