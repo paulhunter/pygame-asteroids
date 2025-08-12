@@ -28,9 +28,10 @@ class LineEntity(pygame.sprite.Sprite):
         """update
         Override the utility hook of the pygame.sprite.Sprite class.
         """
-        
-        #TODO
-        pass
+        self.pos += (self.velocity * dt)
+        self.rotation += (self.angular_speed * dt)
+        if self.rotation > 360.0 or self.rotation < 0:
+            self.rotation %= 360
 
     def draw(self, screen):
         """draw
