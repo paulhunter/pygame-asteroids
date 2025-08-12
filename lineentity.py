@@ -18,7 +18,7 @@ class LineEntity(pygame.sprite.Sprite):
         self.a = a - self.pos
         self.b = b - self.pos
 
-        self.velocity = pygame.Vector2(velocity) if velocity is not None
+        self.velocity = pygame.Vector2(velocity) if velocity is not None \
             else pygame.Vector2(0,0)
 
         self.angular_speed = angular_speed if angular_speed != 0 else 0
@@ -35,10 +35,9 @@ class LineEntity(pygame.sprite.Sprite):
 
     def draw(self, screen):
         """draw
-
         Note - we are overriding the draw function on the Sprite class in a way
         that does not respect the original implementation.
         """
-        #TODO
-        pass
+        #TODO - set color based on entity?
+        pygame.draw.line(screen, "white", self.a+self.pos, self.b+self.pos, 2)
 
