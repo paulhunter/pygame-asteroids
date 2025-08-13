@@ -17,6 +17,10 @@ from constants import PLAYER_RADIUS \
 from collisions import circle_and_line_segment_collision
 
 class Player(EntityBase, SpriteBase):
+    """Player
+    TODO: On death of player, generate LineEntity instances for each edge of
+    the 'ship' triangle, and set their velocity and rotation appropriately.
+    """
     containers = None
 
     def __init__(self, pos):
