@@ -103,6 +103,14 @@ class Player(EntityBase, SpriteBase):
     def is_alive(self):
         return self.hit_points > 0
 
+    def destory(self):
+        # Destroy the ship into pieces.
+        a, b, c = self.triangle();
+        line_a = LineEntity(a, b)
+        line_b = LineEntity(b, c)
+        line_c = LineEntity(c, a)
+        #TODO - Spin and set velocity with some amount of randomness.
+
 
 # spritebase overrides
     def draw(self, screen):
