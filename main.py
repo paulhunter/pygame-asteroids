@@ -11,6 +11,7 @@ from player import Player
 from shot import Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from lineentity import LineEntity
 from modifierbase import ModifierBase
 from shieldmodifier import ShieldModifier
 from button import Button
@@ -92,6 +93,7 @@ def main():
     Asteroid.containers = (state.updatable, state.drawable, state.asteroids)
     AsteroidField.containers = (state.updatable)
     ModifierBase.containers = (state.updatable, state.drawable, state.modifiers)
+    LineEntity.containers = (state.updatable, state.drawable)
 
     # Create the player at a later time.
     state.player = None

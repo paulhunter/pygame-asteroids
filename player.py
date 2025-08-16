@@ -6,6 +6,7 @@ import types
 import pygame
 from entitybase import EntityBase
 from spritebase import SpriteBase
+from lineentity import LineEntity
 from shot import Shot
 from constants import PLAYER_RADIUS \
                     , PLAYER_TURN_SPEED \
@@ -30,6 +31,7 @@ class Player(EntityBase, SpriteBase):
         self.score = 0
         self.radius = PLAYER_RADIUS
         self.__triangle = None
+        self.__is_destroyed = False
         # EntityBase Init
         super().__init__(pos)
 
@@ -99,21 +101,31 @@ class Player(EntityBase, SpriteBase):
         else:
             self.hit_points -= 1
 
+        if not self.is_alive():
+            self.destroy()
+
 
     def is_alive(self):
         return self.hit_points > 0
 
-    def destory(self):
+    def destroy(self):
+        if self.__is_destroyed == True:
+            return
+        
+        self.__is_destroyed = True
         # Destroy the ship into pieces.
         a, b, c = self.triangle();
-        line_a = LineEntity(a, b)
-        line_b = LineEntity(b, c)
-        line_c = LineEntity(c, a)
+        line_a = LineEntity(a, b, self.velocity, 100)
+        line_b = LineEntity(b, c, self.velocity, -50)
+        line_c = LineEntity(c, a, self.velocity, 50)
         #TODO - Spin and set velocity with some amount of randomness.
 
 
 # spritebase overrides
     def draw(self, screen):
+        if self.__is_destroyed == True:
+            return
+
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
         if self.shield_level > 0:
             pygame.draw.circle(screen, "blue", self.position, self.radius + 2, 2)
@@ -173,7 +185,6 @@ class Player(EntityBase, SpriteBase):
             or self.position.x + b < bounds[0]
             or self.position.y - b > bounds[3]
             or self.position.y + b < bounds[2]):
-            print ("check failed")
             return True
 
         # Otherwise, we are within bounds.
