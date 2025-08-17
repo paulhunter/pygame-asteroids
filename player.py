@@ -4,6 +4,7 @@ Represents the player, visualized as a triangle, and its actions as an entity.
 '''
 import types
 import pygame
+from utils import Utils
 from entitybase import EntityBase
 from spritebase import SpriteBase
 from lineentity import LineEntity
@@ -115,9 +116,12 @@ class Player(EntityBase, SpriteBase):
         self.__is_destroyed = True
         # Destroy the ship into pieces.
         a, b, c = self.triangle();
-        line_a = LineEntity(a, b, self.velocity, 100)
-        line_b = LineEntity(b, c, self.velocity, -50)
-        line_c = LineEntity(c, a, self.velocity, 50)
+        line_a = LineEntity(a, b,
+            self.velocity + Utils.random_vector2(20), 100)
+        line_b = LineEntity(b, c,
+            self.velocity + Utils.random_vector2(20), -50)
+        line_c = LineEntity(c, a,
+            self.velocity + Utils.random_vector2(20), 50)
         #TODO - Spin and set velocity with some amount of randomness.
 
 
