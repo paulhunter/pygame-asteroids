@@ -8,7 +8,11 @@ class Utils:
 
     @staticmethod
     def random_vector2(length = 1):
+        """random_vector2
+        Create a uniformily random vector with axial values within the range
+        [-length, length]
+        """
         return Vector2(
-            random.uniform(0, length),
-            random.uniform(0, length)
+            random.uniform(-length, length),
+            random.uniform(-length, length)
         )
