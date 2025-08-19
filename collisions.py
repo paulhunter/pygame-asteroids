@@ -4,9 +4,17 @@ import math
 # TODO - Unit Tests as a __main__ ?
 
 def circle_circle_collision(o1, radius1, o2, radius2):
-        d = o1.distance_squared_to(o2)
-        d2 = (radius1 * radius1) + (radius2 * radius2)
-        return (d2 > d)
+    """circle_circle_collision
+    o1 - origin/center point of the first circle
+    radius1 - radius of the first circle
+    o2 - origin/center point of the second circle
+    radius2 - radius of the second circle
+    returns: True if the circles overlap, including if one circle is enclosed
+    within the other.
+    """
+    d = o1.distance_squared_to(o2)
+    d2 = (radius1 * radius1) + (radius2 * radius2)
+    return (d2 > d)
 
 
 def circle_and_line_segment_collision(o, radius, a, b):
