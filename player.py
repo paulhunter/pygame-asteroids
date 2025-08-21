@@ -31,10 +31,15 @@ class Player(EntityBase, SpriteBase):
         self.shot_cooldown = 0
         self.score = 0
         self.radius = PLAYER_RADIUS
-        self.__triangle = None
         self.__is_destroyed = False
         # EntityBase Init
         super().__init__(pos)
+
+        # base geometry - oriented north by default
+        self.__triangle = types.SimpleNamespace()
+        self.__triangle.forward = pygame.Vector2(0, -1) * self.radius
+        self.__triangle.right = self.__triangle.forward.rotate(140)
+        self.__triangle.left = self.__triangle.forward.rotate(220)
 
         self.frame = 0 # animation frame
         self.thrusting = False # Is ship firing the main thruster?
@@ -50,13 +55,6 @@ class Player(EntityBase, SpriteBase):
 
 
     def triangle(self):
-        # base geometry - oriented north by default
-        if self.__triangle is None:
-            self.__triangle = types.SimpleNamespace()
-            self.__triangle.forward = pygame.Vector2(0, -1) * self.radius
-            self.__triangle.right = self.__triangle.forward.rotate(140)
-            self.__triangle.left = self.__triangle.forward.rotate(220)
-
         a = self.position + self.__triangle.forward.rotate(self.rotation)
         b = self.position + self.__triangle.right.rotate(self.rotation)
         c = self.position + self.__triangle.left.rotate(self.rotation)
@@ -156,7 +154,7 @@ class Player(EntityBase, SpriteBase):
         if not self.is_alive():
             return
 
-        # MOVEMENT CONTROLS + MOVEMENT
+        # MOVEMENT CONTROLS
         self.frame = (self.frame + 1) % 4
         self.thrusting = False
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
@@ -175,7 +173,7 @@ class Player(EntityBase, SpriteBase):
         if keys[pygame.K_q]:
             self.accel(dt, -self.velocity.normalize())
 
-        # SHOOTING CONTROLS + SHOOTING
+        # SHOOTING CONTROLS
         if self.shot_cooldown > 0:
             self.shot_cooldown -= dt
         elif keys[pygame.K_SPACE]:
