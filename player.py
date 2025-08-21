@@ -50,9 +50,10 @@ class Player(EntityBase, SpriteBase):
 
 
     def triangle(self):
+        # base geometry - oriented north by default
         if self.__triangle is None:
             self.__triangle = types.SimpleNamespace()
-            self.__triangle.forward = self.forward() * self.radius
+            self.__triangle.forward = pygame.Vector2(0, -1) * self.radius
             self.__triangle.right = self.__triangle.forward.rotate(140)
             self.__triangle.left = self.__triangle.forward.rotate(220)
 
