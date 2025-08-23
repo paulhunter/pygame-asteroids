@@ -4,6 +4,7 @@ import pygame
 from asteroid import Asteroid
 from weaponmodifier import WeaponModifier
 from shieldmodifier import ShieldModifier
+from speedmodifier import SpeedModifier
 from constants import ASTEROID_KINDS \
                     , ASTEROID_SPAWN_INTERVAL \
                     , ASTEROID_MIN_RADIUS \
@@ -78,7 +79,7 @@ class AsteroidField(pygame.sprite.Sprite):
 
         self.modifier_spawn_threshold = MODIFIER_SPAWN_INTERVAL
         self.modifier_spawn_count = 0
-        self.play_area = pygame.Rect(-PLAYER_RADIUS,-PLAYER_RADIUS,
+        self.play_area = pygame.Rect(-PLAYER_RADIUS, -PLAYER_RADIUS,
             SCREEN_HEIGHT+PLAYER_RADIUS, SCREEN_WIDTH+PLAYER_RADIUS)
 
 
@@ -92,9 +93,14 @@ class AsteroidField(pygame.sprite.Sprite):
 
     def spawn_modifier(self, position, velocity):
         k = random.randint(0, 100)
-        if k > 20:
+        if k > 80:
+            # 20% Chance
+            SpeedModifier(position.x, position.y, velocity)
+        elif k > 20:
+            # 60% Chance
             ShieldModifier(position.x, position.y, velocity)
         else:
+            # 20% Chance
             WeaponModifier(position.x, position.y, velocity)
 
 

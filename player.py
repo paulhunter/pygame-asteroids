@@ -46,6 +46,7 @@ class Player(EntityBase, SpriteBase):
         self.shot_interval_modifier = 1.0 # larger value, greater interval, slower rate of fire.
         self.shield_level = 0
         self.hit_points = 1 # Number of collisions the ship will sustain.
+        self.acceleration = PLAYER_ACCELERATION
 
 
     def forward(self):
@@ -67,7 +68,7 @@ class Player(EntityBase, SpriteBase):
 
     def accel(self, dt, direction = None):
         direction = direction if direction is not None else self.forward()
-        new_velocity = self.velocity + (direction * dt * PLAYER_ACCELERATION)
+        new_velocity = self.velocity + (direction * dt * self.acceleration)
         if new_velocity.length() > PLAYER_MAX_SPEED:
             new_velocity.scale_to_length(PLAYER_MAX_SPEED)
         self.velocity = new_velocity
