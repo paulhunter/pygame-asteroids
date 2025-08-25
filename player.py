@@ -172,7 +172,9 @@ class Player(EntityBase, SpriteBase):
             self.accel(-dt)
 
         if keys[pygame.K_q]:
-            self.accel(dt, -self.velocity.normalize())
+            if (self.velocity.length_squared() > 0):
+                # half the acceleration for retro-thrusters
+                self.accel(dt / 2, -self.velocity.normalize())
 
         # SHOOTING CONTROLS
         if self.shot_cooldown > 0:
