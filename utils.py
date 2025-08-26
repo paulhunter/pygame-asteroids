@@ -1,3 +1,6 @@
+"""utils.py
+Defines the Utils class, a collection of static helper functions.
+"""
 import random
 from pygame import Vector2
 
