@@ -110,24 +110,24 @@ class Player(EntityBase, SpriteBase):
         return self.hit_points > 0
 
     def destroy(self):
-        if self.__is_destroyed == True:
+        if self.__is_destroyed is True:
             return
-        
+
         self.__is_destroyed = True
         # Destroy the ship into pieces.
-        a, b, c = self.triangle();
-        line_a = LineEntity(a, b,
+        a, b, c = self.triangle()
+        LineEntity(a, b,
             self.velocity + Utils.random_vector2(20), 100)
-        line_b = LineEntity(b, c,
+        LineEntity(b, c,
             self.velocity + Utils.random_vector2(20), -50)
-        line_c = LineEntity(c, a,
+        LineEntity(c, a,
             self.velocity + Utils.random_vector2(20), 50)
         #TODO - Spin and set velocity with some amount of randomness.
 
 
 # spritebase overrides
     def draw(self, screen):
-        if self.__is_destroyed == True:
+        if self.__is_destroyed is True:
             return
 
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
@@ -172,7 +172,7 @@ class Player(EntityBase, SpriteBase):
             self.accel(-dt)
 
         if keys[pygame.K_q]:
-            if (self.velocity.length_squared() > 0):
+            if self.velocity.length_squared() > 0:
                 # half the acceleration for retro-thrusters
                 self.accel(dt / 2, -self.velocity.normalize())
 
