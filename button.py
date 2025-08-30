@@ -1,7 +1,13 @@
 
+""" button.py
+Defines a the Button class
+"""
 import pygame
 
 class Button:
+    """ Button
+    A generalized UI element for button like interactions.
+    """
 
 
     def __init__(self, x, y, width, height, text):
@@ -52,14 +58,14 @@ class Button:
     def update(self, dt, events):
         for ev in events:
             if ev.type == pygame.MOUSEBUTTONDOWN:
-                if (self.on_click is not None
+                if (callable(self.on_click)
                         and self.__rect.collidepoint(ev.pos)
                         and ev.button == 1):
                     self.__mouse_down = True
 
             if ev.type == pygame.MOUSEBUTTONUP:
                 if (self.__mouse_down
-                    and self.on_click is not None
+                    and callable(self.on_click)
                     and self.__rect.collidepoint(ev.pos)
                     and ev.button == 1):
                     # on release of left button 
