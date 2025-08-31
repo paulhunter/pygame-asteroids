@@ -52,4 +52,3 @@ class LineEntity(pygame.sprite.Sprite):
             self.a.rotate(self.rotation) + self.pos,
             self.b.rotate(self.rotation) + self.pos,
             2)
-
