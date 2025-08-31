@@ -19,13 +19,10 @@ from button import Button
 def click_start(state):
     state.sounds.interface_beep.play()
     state.in_menu = None
-
     for a in state.asteroids:
         a.kill()
-
     for s in state.shots:
         s.kill()
-
     for m in state.modifiers:
         m.kill()
 
