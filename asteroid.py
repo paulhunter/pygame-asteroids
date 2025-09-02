@@ -3,7 +3,10 @@ import random
 import pygame
 
 from circleshape import CircleShape
-from constants import ASTEROID_MIN_RADIUS
+from constants import ASTEROID_MIN_RADIUS, \
+                        ASTEROID_CHILD_VELOCITY_FACTOR, \
+                        ASTEROID_DIVERT_MIN, \
+                        ASTEROID_DIVERT_MAX
 
 class Asteroid(CircleShape):
     """Asteroid - Sprite component"""
@@ -33,9 +36,9 @@ class Asteroid(CircleShape):
         if self.radius <= ASTEROID_MIN_RADIUS:
             return
 
-        divert = random.uniform(20, 50)
-        velocity_a = self.velocity.rotate(divert) * 1.2
-        velocity_b = self.velocity.rotate(-divert) * 1.2
+        divert = random.uniform(ASTEROID_DIVERT_MIN, ASTEROID_DIVERT_MAX)
+        velocity_a = self.velocity.rotate(divert) * ASTEROID_CHILD_VELOCITY_FACTOR
+        velocity_b = self.velocity.rotate(-divert) * ASTEROID_CHILD_VELOCITY_FACTOR
         radius = self.radius - ASTEROID_MIN_RADIUS
 
         child_a = Asteroid(self.position.x, self.position.y, radius)

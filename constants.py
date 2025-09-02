@@ -9,6 +9,9 @@ ASTEROID_SPAWN_INTERVAL = 0.8 # seconds
 ASTEROID_KINDS = 3 # Stages/Sizes of Asteroids
 ASTEROID_MIN_RADIUS = 20 # pixels
 ASTEROID_MAX_RADIUS = ASTEROID_KINDS * ASTEROID_MIN_RADIUS # pixels
+ASTEROID_DIVERT_MIN = 0 # Degrees of diversion for child asteroids
+ASTEROID_DIVERT_MAX = 60 # Degrees
+ASTEROID_CHILD_VELOCITY_FACTOR = 1.2 # Multiplicative Factor of child velocity
 
 PLAYER_RADIUS = 25 # pixels
 PLAYER_TURN_SPEED = 300 # degrees per second
