@@ -51,6 +51,11 @@ Adds a temporary shield to your ship. Shields collapse when they come into
 contact with an asteroid, disipating its total energy into the rock and
 destroying it completely.
 
+### Thrust Power Boost
+![Image of a Thrust Modifier](./wiki-content/speed-modifier.png)
+
+Adds a permanent increase to the power of the ships thrusters, increasing the
+acceleration of the ship up to 500%. 
 
 # Behind the Scenes
 
