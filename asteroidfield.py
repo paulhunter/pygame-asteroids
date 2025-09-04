@@ -107,15 +107,14 @@ class AsteroidField(pygame.sprite.Sprite):
     def generate_spawn(self, radius):
         """generate_spawn
             Return a position and velocity vector at random, provided the 
-            radius of the object to be spawned.
+            visual radius of the object to be spawned.
         """
         # radius - Size of the sprite to the spawned
         edge = random.choice(self.edges)
         speed = random.randint(40,100)
         velocity = edge[0] * speed
         velocity = velocity.rotate(random.randint(-60, 60))
-        # +10 as a fudge factor for visual/drawing style/effects
-        position = edge[1](random.uniform(0,1), radius + 10)
+        position = edge[1](random.uniform(0,1), radius)
         return (position, velocity)
 
 
