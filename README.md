@@ -133,3 +133,6 @@ use from [here](https://sonniss.com/gameaudiogdc/).
 
 interface-beep - Part 1/SciFi Interface/Beep
 
+# Project References
+
+ [Invent with Python - Making Games with PyGame [PDF]](https://inventwithpython.com/makinggames.pdf)
