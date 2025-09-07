@@ -19,10 +19,11 @@ class Slider:
         self.value = None
 
     def set_range(self, range):
-        pass
+        # TOOD - Guards?
+        self.range = tuple(range[:2])
 
     def set_value(self, value):
-        pass
+        self.value = value
 
     def draw(self, screen):
         pass
