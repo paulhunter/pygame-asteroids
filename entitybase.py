@@ -18,7 +18,7 @@ class EntityBase:
     def update(self, state, dt):
         """update
         Update the entity over the time space of the frame dt, using the current
-        provided game state. 
+        provided game state.
         """
         self.position += self.velocity * dt
         self.rotation = (self.rotation + (self.rotation_speed * dt)) % 360
