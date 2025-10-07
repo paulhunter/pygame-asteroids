@@ -1,6 +1,6 @@
 
 """ button.py
-Defines a the Button class
+Defines the Button class
 """
 import pygame
 

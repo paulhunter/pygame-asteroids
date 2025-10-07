@@ -13,6 +13,10 @@ class Slider:
     def __init__(self, pos, size):
         self.pos = pygame.Vector2(pos)
         self.size = pygame.Vector2(size)
+        self.__rect = pygame.Rect(  self.pos.x,
+                                    self.pos.y,
+                                    self.size.x,
+                                    self.size.y)
 
         self.on_change = None
         self.range = None
@@ -26,7 +30,10 @@ class Slider:
         self.value = value
 
     def draw(self, screen):
-        pass
+        # Draw the bar of the slider. 
+        pygame.draw.rect(screen,
+            "grey", self.__rect)
+        
 
     def update(self, dt, events):
         pass

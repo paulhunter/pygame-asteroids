@@ -13,8 +13,9 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from lineentity import LineEntity
 from modifierbase import ModifierBase
-from shieldmodifier import ShieldModifier
+from speedmodifier import SpeedModifier
 from button import Button
+from slider import Slider
 
 def click_start(state):
     state.sounds.interface_beep.play()
@@ -112,9 +113,11 @@ def main():
     quit_button = Button(50, 590, 260, 80, "Quit")
     quit_button.on_click = lambda: click_quit(state)
 
+    volume_slider = Slider((1000, 600), (200, 40))
+
     # How To Menu Assets
     sub_canvas = pygame.Surface((200,400))
-    how_to_weapon_modifier = ShieldModifier(100,200,pygame.Vector2(0,0))
+    how_to_weapon_modifier = SpeedModifier(100,200,pygame.Vector2(0,0))
     how_to_weapon_modifier.draw(sub_canvas)
 
     # Time Delta - in seconds
@@ -137,6 +140,7 @@ def main():
         how_to_button.update(dt, events)
         main_menu_button.update(dt, events)
         quit_button.update(dt, events)
+        volume_slider.update(dt, events)
 
 
         for a in state.asteroids:
@@ -193,6 +197,7 @@ def main():
             start_button.draw(screen, font)
             how_to_button.draw(screen, font)
             quit_button.draw(screen, font)
+            volume_slider.draw(screen)
 
             screen.blit(title, (SCREEN_WIDTH - title.get_width() - 150, 100))
 
