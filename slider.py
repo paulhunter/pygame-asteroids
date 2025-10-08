@@ -34,6 +34,10 @@ class Slider:
         pygame.draw.rect(screen,
             "grey", self.__rect)
         
+        # Draw the 'knob' of the slider based on the current value. 
+
+        # Colors dependent on the action
+        
 
     def update(self, dt, events):
         pass
