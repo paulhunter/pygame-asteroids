@@ -18,9 +18,16 @@ class Slider:
                                     self.size.x,
                                     self.size.y)
 
+        i = self.size.y / 3 
+        self.__bar = pygame.Rect(   self.pos.x + i,
+                                    self.pos.y + i, 
+                                    self.size.x - 2*i,
+                                    self.size.y - 2*i)         
+                                   
+
         self.on_change = None
-        self.range = None
-        self.value = None
+        self.range = pygame.Vector2(0,100)
+        self.value = 0
 
     def set_range(self, range):
         # TOOD - Guards?
@@ -30,16 +37,27 @@ class Slider:
         self.value = value
 
     def draw(self, screen):
-        # Draw the bar of the slider. 
+        # Draw a debug bounding box.
         pygame.draw.rect(screen,
-            "grey", self.__rect)
+            "pink", self.__rect, 1)
+
+        # Draw the bar of the slider. 
+        pygame.draw.rect(screen, 
+            "grey", self.__bar)
+
         
         # Draw the 'knob' of the slider based on the current value. 
+        x = (self.value - self.range[0]) / (self.range[1] - self.range[0]) 
+        o = pygame.Vector2( (x * self.__bar.width) + self.__bar.x, 
+                            (self.__bar.height / 2) + self.__bar.y)
+        pygame.draw.circle(screen,
+            "yellow", o, self.size.y / 3, 2)
 
         # Colors dependent on the action
         
 
     def update(self, dt, events):
+
         pass
 
 
