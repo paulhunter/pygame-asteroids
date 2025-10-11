@@ -57,7 +57,10 @@ class Slider:
         
 
     def update(self, dt, events):
-
+        for ev in events:
+            if ev.type == pygame.MOUSEBUTTONDOWN:
+                if (self.__rect.collidepoint(ev.pos)):
+                    self.set_value(self.value + 20)
         pass
 
 
