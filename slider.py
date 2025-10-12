@@ -25,9 +25,20 @@ class Slider:
                                     self.size.y - 2*i)         
                                    
 
+        # Mouse over the control
+        self.__hover = False
+        # Mouse Down on the control. 
+        self.__mouse_down = False
+        # Mouse Down occured over the knob - its 'held'
+        self.__knob_held = False
+        # Mouse Over the knob
+        self.__knob_hover = False
+        
+
         self.on_change = None
         self.range = pygame.Vector2(0,100)
         self.value = 0
+
 
     def set_range(self, range):
         # TOOD - Guards?
@@ -35,6 +46,9 @@ class Slider:
 
     def set_value(self, value):
         self.value = value
+
+    def on_knob(self, point):
+        return self.__bar.collidepoint(point)
 
     def draw(self, screen):
         # Draw a debug bounding box.
@@ -51,7 +65,8 @@ class Slider:
         o = pygame.Vector2( (x * self.__bar.width) + self.__bar.x, 
                             (self.__bar.height / 2) + self.__bar.y)
         pygame.draw.circle(screen,
-            "yellow", o, self.size.y / 3, 2)
+            ("yellow" if not self.__knob_hover else "orange"),
+            o, self.size.y / 3, 2)
 
         # Colors dependent on the action
         
@@ -61,7 +76,14 @@ class Slider:
             if ev.type == pygame.MOUSEBUTTONDOWN:
                 if (self.__rect.collidepoint(ev.pos)):
                     self.set_value(self.value + 20)
-        pass
+
+            if ev.type == pygame.MOUSEMOTION:
+                if (self.__knob_hover
+                    and not self.on_knob(ev.pos)):
+                    self.__knob_hover = False
+                elif (not self.__knob_hover
+                    and self.on_knob(ev.pos)):
+                    self.__knob_hover = True
 
 
 
