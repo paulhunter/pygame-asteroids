@@ -76,9 +76,8 @@ class Slider:
 
         
         # Draw the 'knob' of the slider based on the current value. 
-        x = (self.value - self.range[0]) / (self.range[1] - self.range[0]) 
-        o = pygame.Vector2( (x * self.__bar.width) + self.__bar.x, 
-                            (self.__bar.height / 2) + self.__bar.y)
+        x = self.value_to_axis(self.value)
+        o = pygame.Vector2(x, (self.__bar.height / 2) + self.__bar.y)
         pygame.draw.circle(screen,
             ("yellow" if not self.__knob_hover else "orange"),
             o, self.size.y / 3, 2)
