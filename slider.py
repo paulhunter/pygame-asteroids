@@ -50,6 +50,21 @@ class Slider:
     def on_knob(self, point):
         return self.__bar.collidepoint(point)
 
+    def axis_to_value(self, x):
+        # Returns a value based on the mouse position relative to the axis
+        v = min(self.__bar.x + self.__bar.width, max(self.__bar.x, x))
+        v = (v - self.__bar.x) / (self.__bar.width)
+        z = self.range[0] + (v*(self.range[1] - self.range[0]))
+        return z
+    
+    def value_to_axis(self, value = None):
+        # Returns the axial position of the value provided, or the current value
+        value = value if value is not None else self.value
+        r = (value - self.range[0]) / (self.range[1] - self.range[0])
+        x = (self.__bar.x) + (r * self.__bar.width)
+        return x
+
+
     def draw(self, screen):
         # Draw a debug bounding box.
         pygame.draw.rect(screen,
@@ -76,6 +91,8 @@ class Slider:
             if ev.type == pygame.MOUSEBUTTONDOWN:
                 if (self.__rect.collidepoint(ev.pos)):
                     self.set_value(self.value + 20)
+                else:
+                    print (self.axis_to_value(ev.pos[0]))
 
             if ev.type == pygame.MOUSEMOTION:
                 if (self.__knob_hover
