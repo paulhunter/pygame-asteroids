@@ -3,6 +3,16 @@ import math
 
 # TODO - Unit Tests as a __main__ ?
 
+def circle_and_point_collision(o, r, p):
+    """circle_and_point_collision
+    o - (pygame.Vector2) origin/center of the circle
+    r - radius of the circle
+    p - (pygame.Vector2) point
+    returns: True if the point is within the bounds of the circle
+    """
+    return circle_circle_collision(o, r, p, 0)
+
+
 def circle_circle_collision(o1, radius1, o2, radius2):
     """circle_circle_collision
     o1 - origin/center point of the first circle
