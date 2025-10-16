@@ -3,12 +3,15 @@ Defines the Slider class
 """
 import pygame
 
+from collisions import circle_and_point_collision
 
 
 class Slider:
     """ Slider
     A GUI Slider Control
     """
+    # TODO - Generalize, support a vertical slider variant.
+
 
     def __init__(self, pos, size):
         self.pos = pygame.Vector2(pos)
@@ -24,6 +27,7 @@ class Slider:
                                     self.size.x - 2*i,
                                     self.size.y - 2*i)         
                                    
+        self.__knob_radius = self.size.y / 3
 
         # Mouse over the control
         self.__hover = False
@@ -48,7 +52,11 @@ class Slider:
         self.value = value
 
     def on_knob(self, point):
-        return self.__bar.collidepoint(point)
+        o = pygame.Vector2(
+            self.value_to_axis(self.value),
+            self.__bar.y + (self.__bar.height/2)
+        )
+        return circle_and_point_collision(o, self.__knob_radius, point)
 
     def axis_to_value(self, x):
         # Returns a value based on the mouse position relative to the axis
@@ -87,13 +95,28 @@ class Slider:
 
     def update(self, dt, events):
         for ev in events:
+            if ev.type == pygame.MOUSEBUTTONUP:
+                if (self.__knob_held == True):
+                    self.__knob_held = False
+
             if ev.type == pygame.MOUSEBUTTONDOWN:
-                if (self.__rect.collidepoint(ev.pos)):
-                    self.set_value(self.value + 20)
+                if (self.on_knob(ev.pos)):
+                    self.__knob_held = True
+                elif (self.__bar.collidepoint(ev.pos)):
+                    # Clicked the bar not the knob
+                    cv = self.axis_to_value(ev.pos[0])
+                    step = -10 if cv < self.value else 10
+                    self.set_value(self.value + step)
+                    # If the knob has moved under the cursor, the hover
+                    # flag is no longer correct
                 else:
                     print (self.axis_to_value(ev.pos[0]))
 
             if ev.type == pygame.MOUSEMOTION:
+                if (self.__knob_held):
+                    v = self.axis_to_value(ev.pos[0])
+                    self.set_value(v)
+
                 if (self.__knob_hover
                     and not self.on_knob(ev.pos)):
                     self.__knob_hover = False
