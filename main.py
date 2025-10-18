@@ -41,6 +41,11 @@ def click_how_to(state):
 def click_quit(state):
     state.quit = True
 
+def set_volume(state, ratio):
+    state.sounds.channel_main.set_volume(ratio/100)
+    if (not state.sounds.channel_main.get_busy()):
+        state.sounds.channel_main.play(state.sounds.interface_beep)
+
 
 def main():
     # Init the pygame engine and create our canvas
@@ -71,6 +76,7 @@ def main():
     state.quit = False
     state.sounds = types.SimpleNamespace()
     state.sounds.interface_beep = pygame.mixer.Sound('./sounds/interface-beep.wav')
+    state.sounds.channel_main = pygame.mixer.Channel(0)
 
     # all game objects that can be updated.
     state.updatable = pygame.sprite.Group()
@@ -114,6 +120,7 @@ def main():
     quit_button.on_click = lambda: click_quit(state)
 
     volume_slider = Slider((1000, 600), (200, 40))
+    volume_slider.on_change = lambda x: set_volume(state, x)
 
     # How To Menu Assets
     sub_canvas = pygame.Surface((200,400))

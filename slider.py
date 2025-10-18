@@ -41,7 +41,7 @@ class Slider:
 
         self.on_change = None
         self.range = pygame.Vector2(0,100)
-        self.value = 0
+        self.value = 100
 
 
     def set_range(self, range):
@@ -50,6 +50,8 @@ class Slider:
 
     def set_value(self, value):
         self.value = value
+        if callable(self.on_change):
+            self.on_change(self.value)
 
     def on_knob(self, point):
         o = pygame.Vector2(
